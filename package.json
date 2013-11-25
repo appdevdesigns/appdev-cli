@@ -1,0 +1,22 @@
+{
+  "name": "appdev",
+  "version": "0.1.0",
+  "description": "command line utilities for appDev projects",
+  "main": "lib/main.js",
+  "bin": {
+    "appdev": "bin/appDev.js"
+  },
+  "dependencies": {
+    "commander": "~2.0.0",
+    "colog": "~0.1.8",
+    "ejs": "~0.8.4",
+    "read": "~1.0.5",
+    "mysql": "~2.0.0-alpha9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johnny Hausman",
+  "license": "GPLv3"
+}
