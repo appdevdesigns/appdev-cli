@@ -1,0 +1,34 @@
+
+
+  , pageAsset:function(req,res) {
+      // route :  /page/*/* 
+    
+      var urlParts = req.url.split('/');
+
+
+      // remove 'page'
+      var value = urlParts.shift();
+      if (value == '') urlParts.shift();
+
+      // if this maps to a normal asset
+      var assetPath = path.join('assets', urlParts.join(path.sep));
+      fs.exists(assetPath,function (exists) {
+
+          if (exists) {
+        
+              // just return that file
+              res.sendfile(assetPath);
+        
+          } else {
+
+               // this is a page/[pageName]/[file] request:
+               var filePath = path.join('assets', 'page', urlParts.join(path.sep));
+             
+               res.sendfile(filePath);
+          }
+
+       });
+  }
+
+
+};

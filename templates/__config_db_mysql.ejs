@@ -1,0 +1,13 @@
+
+  // AppDev:  mysql keep your specific instance configurations here:
+  ,adapters:{
+      mysql: {
+<% if (connectionType == 'port') { %>          host: '<%= host %>',
+          port: <%= port %>,<% } else { %>          socketPath: '<%= socketPath %>',<% } %>
+          user: '<%= user %>',
+          password: '<%= password %>',
+          database: '<%= database %>'
+      }
+  }
+  
+};

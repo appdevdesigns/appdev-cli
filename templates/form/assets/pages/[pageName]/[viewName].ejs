@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+    <form style="padding:10px" >
+<%
+    if (attributes) {
+        for (var o in attributes) {
+        
+            if (o != 'id') {
+%>
+        <div class="form-group">
+            <label><%= o %></label>
+            <input type="text" name="<%= o %>"  value="" class="form-control">
+        </div>
+<%        
+            }
+        
+        }
+        
+    } else {
+%>
+    
+      No model attributes found ...   
+    
+<%    
+    }
+%>
+
+    </form>
+    <a class="ad-submit btn pull-right btn-primary" href="#">Submit</a><a class="ad-cancel btn pull-right btn-default" href="#">Cancel</a>
+</div>

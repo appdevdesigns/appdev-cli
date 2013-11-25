@@ -1,0 +1,10 @@
+    // Setup <%= controller.Class %> 
+<% if (model) { %>    AD.models.Projects.findAll({}, function(list) {
+<% } %>        var <%= controller.var %>  = new AD.controllers.<%= controller.Class %>('#<%= divID %>', {
+<% if (model) { %>            dataSource:list, <% } %>
+            });
+
+    });
+    
+
+}); // ADR

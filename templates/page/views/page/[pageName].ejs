@@ -1,0 +1,17 @@
+
+<%
+switch (layout) {
+    case 'crudlist': %> <%
+       include ../../../../__page_view_crudlist.ejs %> <%
+       break;
+       
+    case '2colLeft': %> <%
+       include ../../../../__page_view_2colLeft.ejs %> <%
+       break;
+       
+    default: %>
+        layout [<%= layout %>] didn't match our template options!
+        <%
+        
+        break;
+} %>
