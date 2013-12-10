@@ -15,8 +15,6 @@ describe('test run before all tests',function(){
 		//Change directory to tmp to create application
 		process.chdir('/tmp');
 		
-		console.log("current directory = "+process.cwd());
-		
 		//Issue "appdev install testApplication" command
     	cmd = spawn('appdev',['install','testApplication']);
 		
