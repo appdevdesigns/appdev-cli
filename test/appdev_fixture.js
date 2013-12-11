@@ -35,7 +35,7 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 	    // return to our top level directory
 	    process.chdir(path.join(__dirname, '..'));
 
-	    // remove /api & /assets directory
+	    // remove /api & /assets directories
 	    var apiGone = Util.removeDir(path.join(__dirname, 'scratchArea', 'api'));
 	    var assetsGone = Util.removeDir(path.join(__dirname, 'scratchArea', 'assets'));
 	    $.when(apiGone, assetsGone).then(function() {
