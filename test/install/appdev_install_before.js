@@ -10,7 +10,7 @@ describe('test run before all tests',function(){
 	it('running appdev install command',function(done){
 		
 		//Set timeout to 11 secs 'cause this process takes longer than normal
-		this.timeout(11000);
+		this.timeout(17000);
 		
 		//Change directory to tmp to create application
 		process.chdir('/tmp');
@@ -28,9 +28,12 @@ describe('test run before all tests',function(){
 			   || data.toString().indexOf("localhost") != -1
 			   || data.toString().indexOf("port:") != -1
 			   || data.toString().indexOf("user:") != -1
-			   || data.toString().indexOf("password:") != -1
-			   || data.toString().indexOf("database:") != -1){
-				cmd.stdin.write('\n');
+			   || data.toString().indexOf("password:") != -1){
+					cmd.stdin.write('\n');
+			}
+			
+			if (data.toString().indexOf("database:") != -1) {
+				cmd.stdin.write("test_site\n");
 			}
 		});
 		
