@@ -9,10 +9,10 @@ function(){
 
 
 
-    AD.controllers.<%= ControllerName %> = can.Control.extend({
+    AD.controllers.<%= ControllerName %> = AD.classes.UIController.extend({
 
 
-        init: function( element, options ) {
+        init: function (element, options) {
             var self = this;
             this.options = AD.defaults({
                     templateDOM: '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
@@ -22,11 +22,13 @@ function(){
 
             this.initDOM();
 
+            // Call parent init
+            AD.classes.UIController.prototype.init.apply(this, arguments);
         },
 
 
 
-        initDOM: function() {
+        initDOM: function () {
 
             this.element.html(can.view(this.options.templateDOM, {} ));
 
@@ -34,7 +36,7 @@ function(){
 
 
 
-        '.ad-item-add click': function($el, ev) {
+        '.ad-item-add click': function ($el, ev) {
 
             ev.preventDefault();
         },
