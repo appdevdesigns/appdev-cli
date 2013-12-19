@@ -35,6 +35,10 @@ describe('test run before all tests',function(){
 			if (data.toString().indexOf("database:") != -1) {
 				cmd.stdin.write("test_site\n");
 			}
+			
+			if (data.toString().indexOf("port:") != -1) {
+				cmd.stdin.write("3306\n");
+			}
 		});
 		
 		//Listen for stderr messages
