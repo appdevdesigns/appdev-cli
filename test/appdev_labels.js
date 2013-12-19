@@ -1,6 +1,7 @@
 var chai = require('chai');
 var mysql = require('mysql');
 var spawn = require('child_process').spawn;
+var $ = require('jquery');
 
 var Util = require('./helpers/util_helper.js');
 
@@ -25,7 +26,8 @@ describe('test appdev labels :applicationName',function(){
 
 	    // now run the command to create labels
 	    var finished = Util.spawn('appdev', ['labels', 'testApplication', 'testApplication.site.login', 'en', 'Login:'])
-	    setTimeout(function(){
+	    $.when(finished)
+	    .then(function(data) {
 			
 			var db = mysql.createConnection(dbInfo);
 			
@@ -54,7 +56,10 @@ describe('test appdev labels :applicationName',function(){
 					})
 				}
 			});
-	    },7000);
+	    })
+	    .fail(function(err){
+	        done(err);
+	    })
 	});
 	
 	it('check to see appdev labels [applicationName] displays labels',function(done){
