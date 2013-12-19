@@ -11,7 +11,7 @@ var dbInfo = {
 		user: 'root',
 		password: 'root',
 		database: 'test_site',
-		port: '3306'
+		port: '8889'
 	}
 
 
