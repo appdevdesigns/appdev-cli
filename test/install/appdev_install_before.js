@@ -59,6 +59,6 @@ describe('test run before all tests',function(){
 		//Wait to allow the program time to finish
 		setTimeout(function(){
 			done();
-		},10000);
+		},16000);
 	});
 });

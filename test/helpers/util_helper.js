@@ -19,7 +19,7 @@ module.exports= {
 
             //Listen for stdout messages
             cmd.stdout.on('data', function (data) {
-//                console.log('%' + data);
+                console.log('%' + data);
             });
 
             //Listen for stderr messages
