@@ -36,7 +36,7 @@ describe('test run before all tests',function(){
 			}
 			
 			if (data.toString().indexOf("port:") != -1) {
-				cmd.stdin.write("8889\n");
+				cmd.stdin.write("3306\n");
 			}
 		});
 		
