@@ -26,7 +26,6 @@ describe('test run before all tests',function(){
 			if (data.toString().indexOf("db adaptor") != -1 
 			   || data.toString().indexOf("connect by socket") != -1
 			   || data.toString().indexOf("localhost") != -1
-			   || data.toString().indexOf("port:") != -1
 			   || data.toString().indexOf("user:") != -1
 			   || data.toString().indexOf("password:") != -1){
 					cmd.stdin.write('\n');
