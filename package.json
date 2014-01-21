@@ -27,9 +27,7 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
-    "pretest": "make test-before",
-    "test": "make test",
-    "posttest": "make test-after"
+    "test": "make test"
   },
   "author": "Johnny Hausman",
   "license": "GPLv3"
