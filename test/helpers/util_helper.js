@@ -7,19 +7,47 @@ var $  = require('jquery');
 
 var currentPath = '';
 
+function consoleResponse (cmd, data, responses) {
+
+    var dataString = data.toString();
+
+    for (var r in responses) {
+        if (dataString.indexOf(r) != -1) {
+            cmd.stdin.write( responses[r]);
+        }
+    }
+}
+
 
 module.exports= {
 
-
-        spawn: function(command, options) {
+        spawn: function(opt) {  // command, options, responses, exitTrigger) {
             var dfd = $.Deferred();
 
-            //Issue "appdev install testApplication" command
-            cmd = spawn(command, options);
+            opt.responses = opt.responses || null;
+            if(typeof opt.shouldEcho == 'undefined') opt.shouldEcho = true;
+
+
+            // issue the command
+            cmd = spawn(opt.command, opt.options);
+
 
             //Listen for stdout messages
             cmd.stdout.on('data', function (data) {
-//                console.log('%' + data);
+                // should we echo them?
+                if (opt.shouldEcho) {
+                    console.log('' + data);
+                }
+
+                // any responses to handle?
+                if (opt.responses) {
+                    consoleResponse(cmd, data, opt.responses);
+                }
+
+                // Catch the final response text and then continue
+                if (data.toString().indexOf(opt.exitTrigger) != -1){
+                    dfd.resolve();
+                }
             });
 
             //Listen for stderr messages

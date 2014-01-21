@@ -1,0 +1,15 @@
+AD.lang.setCurrentLanguage('<%- langCode %>');
+var labels = {
+<%
+    var converted = [];
+    for (var l=0; l<labels.length; l++) {
+        var labelObj = labels[l];
+        var key = labelObj.label_key;
+        var label = labelObj.label_label;
+        converted.push('"'+key+'":"'+label+'"');
+    }
+%><%- converted.join(",\n") %>
+}
+for (var k in labels) {
+	AD.lang.labels.setLabel(k, labels[k]);
+}

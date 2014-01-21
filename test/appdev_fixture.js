@@ -18,14 +18,17 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 	    process.chdir(path.join(__dirname, 'scratchArea'));
 
 	    // now run the command to create a fixture
-	    var finished = Util.spawn('appdev', ['fixture', 'testApplication', 'TestModel', 'model_field:string', 'model_field2:string', 'model_field3:integer'])
-	    $.when(finished)
+	    Util.spawn({
+	        command:'appdev',
+	        options:['fixture', 'testApplication', 'TestModel', 'model_field:string', 'model_field2:string', 'model_field3:integer'],
+	        shouldEcho:false
+	    })
 	    .then(function(data) {
 	        done();
 	    })
 	    .fail(function(err){
 	        done(err);
-	    })
+	    });
 
 	});
 
