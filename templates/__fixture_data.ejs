@@ -4,7 +4,8 @@
   // Fixture Data:
   // Use this for initial design and testing
   , find:function(req, res) {
-      res.json([
+      
+      var data = [
 <% for (var i=1; i<=3; i++) {
     var entry = ['        {', '           id: '+i+','];
 
@@ -17,17 +18,19 @@
 %>
 <%- entry.join('\n') %>
 <% } // next entry %>
-      ])
+      ];
+      
+      ADCore.comm.success(res, data);
   }
 
   , create:function(req, res) {
-      res.json({ status:'created' })
+      ADCore.comm.success(res,{ status:'created' })
   }
 
   , update:function(req, res) {
-      res.json({status:'updated'})
+      ADCore.comm.success(res,{status:'updated'})
   }
 
   , destroy:function(req, res) {
-      res.json({status:'destroyed'})
+      ADCore.comm.success(res,{status:'destroyed'})
   }
