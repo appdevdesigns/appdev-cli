@@ -34,6 +34,7 @@ module.exports= {
 
             //Listen for stdout messages
             cmd.stdout.on('data', function (data) {
+
                 // should we echo them?
                 if (opt.shouldEcho) {
                     console.log('' + data);
@@ -48,6 +49,7 @@ module.exports= {
                 if (data.toString().indexOf(opt.exitTrigger) != -1){
                     dfd.resolve();
                 }
+
             });
 
             //Listen for stderr messages
@@ -98,5 +100,5 @@ module.exports= {
         }
 
 
-}
+};
 
