@@ -36,10 +36,10 @@ function consoleResponse (cmd, data, responses) {
                     "db adaptor":'\n',
                     "connect by socket":'\n',
                     "localhost":'\n',
-                    "port:":'\n',
+                    "port:":'3306\n',
                     "user:":'\n',
                     "password:":'\n',
-                    "database:":'\n',
+                    "database:":'test_site\n',
                     "authentication":'local\n'
             };
 
