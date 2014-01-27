@@ -6,16 +6,6 @@ var path = require('path');
 var $ = require('jquery');
 var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
 
-function consoleResponse (cmd, data, responses) {
-
-    var dataString = data.toString();
-
-    for (var r in responses) {
-        if (dataString.indexOf(r) != -1) {
-            cmd.stdin.write( responses[r]);
-        }
-    }
-}
 
 (function() {
 
