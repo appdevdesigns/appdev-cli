@@ -1,5 +1,6 @@
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
+var fs = require('fs');
 var path = require('path');
 var $  = require('jquery');
 //var cmd = null;
@@ -21,12 +22,81 @@ function consoleResponse (cmd, data, responses) {
 
 module.exports= {
 
+        adnDir:function(opt) {
+            var dfd = $.Deferred();
+
+
+            fs.mkdir(opt.path,function(err){
+
+                if (err) {
+                    dfd.reject(err);
+
+                } else {
+
+                    process.chdir(opt.path);
+
+                    var adnPath = path.resolve(path.join(__dirname, '..', '..', 'templates', 'install', '.adn'));
+                    fs.readFile(adnPath, 'utf8', function(err, adn){
+
+                        if (err) {
+                            dfd.reject(err);
+                        } else {
+
+                            fs.writeFile(path.join(opt.path, '.adn'), adn, 'utf8', function(err) {
+
+                                if (err) {
+                                    dfd.reject(err);
+                                } else {
+                                    dfd.resolve();
+                                }
+
+                            });
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+
+            return dfd;
+        },
+
+
+
+        dbInfo: function() {
+            // this is the info that will work for travis ci
+            // however, if you include a local_config.js file in this same
+            // directory, then you can get local db settings for your machine
+            // from there.
+
+            var info = {
+                    host: 'localhost',
+                    user: 'root',
+                    password: 'root',
+                    database: 'test_site',
+                    port: '3306'
+                };
+
+
+            var localConfigPath = path.join(__dirname, 'local_config.js');
+            if (fs.existsSync(localConfigPath)) {
+                info = require(localConfigPath).db;
+            }
+
+            return info;
+        },
+
+
+
         spawn: function(opt) {  // command, options, responses, exitTrigger) {
             var dfd = $.Deferred();
 
             opt.responses = opt.responses || null;
             if(typeof opt.shouldEcho == 'undefined') opt.shouldEcho = true;
-
+            opt.onData = opt.onData || function(){};
 
             // issue the command
             cmd = spawn(opt.command, opt.options);
@@ -44,6 +114,9 @@ module.exports= {
                 if (opt.responses) {
                     consoleResponse(cmd, data, opt.responses);
                 }
+
+                // call the onData fn();
+                opt.onData(data);
 
                 // Catch the final response text and then continue
                 if (data.toString().indexOf(opt.exitTrigger) != -1){
@@ -74,6 +147,33 @@ module.exports= {
             });
 
             return dfd;
+        },
+
+
+        spawnSeq:function( cmds ) {
+          var self = this;
+          var dfd = $.Deferred();
+
+          var runIt = function(indx, list) {
+
+              if (indx >= list.length) {
+                  dfd.resolve();
+              } else {
+
+                  self.spawn(list[indx])
+                  .then(function(data){
+                      runIt(indx+1, list);
+                  })
+                  .fail(function(err){
+                      dfd.reject(err);
+                  });
+
+              }
+
+          };
+          runIt(0, cmds);
+
+          return dfd;
         },
 
 

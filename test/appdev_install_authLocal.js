@@ -92,9 +92,11 @@ function consoleResponse (cmd, data, responses) {
     		fs.readFile("/tmp/"+testDir+"/assets/"+testDir+"/setup.js",function(err,data){
     			if (err){
     				console.log("err = "+err);
-    			}
+    				done(err);
+    			} else {
     			chai.assert.deepEqual(data.toString().indexOf("/site/labels/"+testDir+""),63);
     			done();
+    			}
     		});
     	});
 
