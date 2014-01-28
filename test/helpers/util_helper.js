@@ -14,6 +14,10 @@ function consoleResponse (cmd, data, responses) {
 
     for (var r in responses) {
         if (dataString.indexOf(r) != -1) {
+//console.log('dataString:'+dataString);
+//console.log('r:'+r);
+//console.log('response:'+ responses[r]);
+
             cmd.stdin.write( responses[r]);
         }
     }

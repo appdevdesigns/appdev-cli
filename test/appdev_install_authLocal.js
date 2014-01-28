@@ -40,7 +40,7 @@ function consoleResponse (cmd, data, responses) {
                     "user:":'\n',
                     "password:":'\n',
                     "database:":'test_site\n',
-                    "authentication":'local\n'
+                    "type of authentication":'local\n'
             };
 
             Util.spawn({
