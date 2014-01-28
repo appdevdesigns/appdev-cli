@@ -32,7 +32,8 @@ var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
                     "user:":'\n',
                     "password:":'\n',
                     "database:":'test_site\n',
-                    "authentication":'CAS\n'
+                    "authentication":'CAS\n',
+                    "base url":"\n"
             };
 
             Util.spawn({

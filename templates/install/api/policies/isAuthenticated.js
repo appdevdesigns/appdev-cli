@@ -11,14 +11,17 @@
  */
 module.exports = function(req, res, next) {
 
-    // NOTE: no authentication mechanism is in place at the moment
-    // so for now:
-    return next();
-
-    // User is allowed, proceed to the next policy,
-    // or if this is the last policy, the controller
-    if (req.session.authenticated) {
+    // if User is authenticated, proceed to the next policy,
+    if (ADCore.auth.isAuthenticated(req)) {
         return next();
+    } else {
+
+        // call the authentication's
+        if (sails.config.appdev.authType == 'CAS') {
+            CAS.isAuthenticated(req, res, next);
+        } else {
+            ADCore.auth.local.isAuthenticated(req, res, next);
+        }
     }
 
     // User is not allowed
@@ -26,5 +29,5 @@ module.exports = function(req, res, next) {
     // This is used for operations that should result in the forbidden page
     // like UI page requests.
 ////TODO: <2013/12/12> Johnny : This should be multilingual
-    return res.forbidden('You are not permitted to perform this action.');
+//    return res.forbidden('You are not permitted to perform this action.');
 };
