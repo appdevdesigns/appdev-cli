@@ -20,4 +20,7 @@ node_modules
 
 .adn
 
-local_config.js
+# If your local DB info is different for you machine, you
+# can add a test/helpers/local_config.js with your local settings.
+# but we don't track it in github:
+test/helpers/local_config.js

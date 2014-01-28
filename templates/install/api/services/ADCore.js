@@ -11,6 +11,49 @@ var $ = require('jquery');
 module.exports = {
 
 
+    auth: {
+
+        isAuthenticated: function( req ) {
+
+            if (req.session.authenticated) {
+                return true;
+            } else {
+                return false;
+            }
+
+        },
+
+
+
+        local: {
+            isAuthenticated:function(req, res, next) {
+            ////TODO: <2014/1/24> Johnny : Implement a Local Auth option
+                // this is used by service isAuthenticated to determine if a
+                // user is authenticated, and if not, what to do to begin the
+                // process of authenticating them...
+                // handle both web service request & web page requests
+
+                next();
+            }
+        },
+
+
+
+        markAuthenticated: function(req, guid) {
+            req.session.authenticated = true;
+            req.session.appdev = req.session.appdev || { auth:{}, user:{} };
+            req.session.appdev.auth.guid = guid;
+        },
+
+
+
+        markNotAuthenticated: function(req) {
+            req.session.authenticated = false;
+            req.session.appdev = { auth:{}, user:{} };  // drop all appdev info
+        }
+    },
+
+
     comm:{
 
         error:function(res, err, code) {
@@ -18,7 +61,7 @@ module.exports = {
             var packet = {
                 status:'error',
                 data:err
-            }
+            };
 
             // add in optional properties: id, message
             if (err.id) packet.id = err.id;
@@ -38,7 +81,7 @@ module.exports = {
             var packet = {
                 id:5,
                 message:'Reauthenticate.'
-            }
+            };
 
             // NOTE: this == ADCore.comm
             this.error(res, packet, 401);
@@ -51,7 +94,7 @@ module.exports = {
             var packet = {
                 status:'success',
                 data:data
-            }
+            };
 
             // default to HTTP status code: 200
             if ('undefined' == typeof code) code = 200; //AD.Const.HTTP.OK;  // 200: assume all is ok
@@ -144,9 +187,10 @@ module.exports = {
 
 //// TODO: implement the authentication so we can have a user object.
             return {
-                    hasPermission:function() {return true}
+                    hasPermission:function() {return true;}
             };
         },
+
 
 
         /*
@@ -162,7 +206,7 @@ module.exports = {
 //            return req.session.appdev.actualUser;
 //// TODO: implement the authentication so we can have a user object.
             return {
-                    hasPermission:function() {return true}
+                    hasPermission:function() {return true;}
             };
         }
     }
