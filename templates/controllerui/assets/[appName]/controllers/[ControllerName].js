@@ -7,23 +7,40 @@ steal(
 //        '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
 function(){
 
+    // Namespacing conventions:
+    // AD.controllers.[application].[controller]
+<%
+    // we need to figure out how many object initializations to make:
+    var partsNameSpace = appNameSpace.split('.');
+    var currentNS = '';
+    for (var p=0; p < partsNameSpace.length; p++){
+        if (currentNS != '') {
+            currentNS += '.';
+        }
+        currentNS += partsNameSpace[p];
 
-
-    AD.controllers.<%= ControllerName %> = AD.classes.UIController.extend({
+%>    if (typeof AD.controllers.<%= currentNS %> == 'undefined') AD.controllers.<%= currentNS %> = {};
+<%
+    }
+%>    AD.controllers.<%= appNameSpace %>.<%= ControllerName %> = AD.classes.UIController.extend({
 
 
         init: function (element, options) {
             var self = this;
-            this.options = AD.defaults({
+            options = AD.defaults({
                     templateDOM: '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
             }, options);
+            this.options = options;
+
+            // Call parent init
+            AD.classes.UIController.apply(this, arguments);
+
 
             this.dataSource = this.options.dataSource; // AD.models.Projects;
 
             this.initDOM();
 
-            // Call parent init
-            AD.classes.UIController.prototype.init.apply(this, arguments);
+
         },
 
 
