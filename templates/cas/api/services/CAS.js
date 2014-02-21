@@ -9,7 +9,7 @@ var cas;
 // until the bootstrapping is done.
 //// PERHAPS: this should be in /config/bootstrap.js instead?
 var tick = function() {
-    if (sails) {
+    if (typeof sails != 'undefined') {
         cas = new CASObject({
             base_url: sails.config.cas.baseURL,
             version: 2.0
