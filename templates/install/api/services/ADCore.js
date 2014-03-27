@@ -83,6 +83,15 @@ module.exports = {
                 message:'Reauthenticate.'
             };
 
+            // add in additional auth info depending on
+            // authType
+            if ('CAS' == sails.config.appdev.authType) {
+                // include CAS: { uri:'cas/url/here' }
+                packet.CAS = {
+                        uri:sails.config.cas.baseURL
+                }
+            }
+
             // NOTE: this == ADCore.comm
             this.error(res, packet, 401);
         },
@@ -135,7 +144,7 @@ module.exports = {
         if (typeof code == 'function') {
             if (typeof cb == 'undefined') {
                 cb = code;
-                code = 'en';    // <-- this should come from site Default
+                code = sails.config.appdev['lang.default']; // 'en';    // <-- this should come from site Default
             }
         }
 

@@ -1,0 +1,4 @@
+[moduleName]
+================
+
+A new plugin.
