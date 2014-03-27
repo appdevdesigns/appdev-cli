@@ -13,15 +13,18 @@ function(){
     // we need to figure out how many object initializations to make:
     var partsNameSpace = appNameSpace.split('.');
     var currentNS = '';
-    for (var p=0; p < partsNameSpace.length; p++){
+    partsNameSpace.forEach(function(part){
+
+
+//    for (var p=0; p < partsNameSpace.length; p++){
         if (currentNS != '') {
             currentNS += '.';
         }
-        currentNS += partsNameSpace[p];
+        currentNS += part;  //partsNameSpace[p];
 
 %>    if (typeof AD.controllers.<%= currentNS %> == 'undefined') AD.controllers.<%= currentNS %> = {};
 <%
-    }
+    });
 %>    AD.controllers.<%= appNameSpace %>.<%= ControllerName %> = AD.classes.UIController.extend({
 
 

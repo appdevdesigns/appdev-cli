@@ -1,4 +1,4 @@
-[moduleName]
+<%= moduleName %>
 ================
 
 A new plugin.
