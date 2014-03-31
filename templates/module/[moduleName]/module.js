@@ -1,4 +1,5 @@
 
+var AD = require('ad-utils');
 var path = require('path');
 
 
@@ -34,7 +35,7 @@ var combine = function( opts ) {
             obj[key] = myObj[key];
         } else {
 
-console.log( '**** Warning '+ moduleName() + ':  '+opt.kind+' ['+key+'] already defined in sails');
+            AD.log( '<yellow><bold>Warning:</bold> '+ moduleName() + ':  '+opt.kind+' ['+key+'] already defined in sails</yellow>');
 
         }
     }
