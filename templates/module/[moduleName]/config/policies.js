@@ -12,14 +12,21 @@
  */
 
 
-module.exports.policies = {
+module.exports = {
 
-/*
- *   ADCoreController: {
- *       configData: ['isAuthenticated'],
- *       labelConfigFile:[ 'isAuthenticated' ],
- *       logout:true
- *   }
- */
+//    '<%= moduleName%>/YourController': {
+//        method: ['isAuthenticatedService'],
+//        auth: [],
+//        sync:[ 'isAuthenticatedService',
+//               'NSServerDevelopTools',
+//               'NSServerValidateUser',
+//               'NSServerDownloadFromMothership',
+//               'NSServerPrepareOutgoingData',
+//               'NSServerProcessClientData',
+//               'NSServerUploadToMothership'
+//               ],
+//       logout:true
+//    }
+
 
 };

@@ -14,6 +14,12 @@ module.exports.appdev = {
   'authType': '[[authType]]',
 
 
+  // what is the uri of the login page / service?
+  'authURI': 'site/login',
+
+
+
+
   // Which language is the default language to use when none specified:
   'lang.default': 'en'
 

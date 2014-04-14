@@ -86,8 +86,8 @@ module.exports.isAuthenticated = function(req, res, ok)
             CAS.authenticate(req, res, function(username, extended) {
                 // Successful CAS authentication
 
-console.log('CAS authenticated(): extended info:');
-console.log(extended);
+//console.log('CAS authenticated(): extended info:');
+//console.log(extended);
 
                 var guid = extended.username;
                 if (extended.attributes) {
@@ -95,7 +95,7 @@ console.log(extended);
                         guid = extended.attributes.eaguid;
                     }
                 }
-console.log(' guid: '+guid);
+//console.log(' guid: '+guid);
 
                 ADCore.auth.markAuthenticated(req, guid); //req.session.authenticated = true;
                 req.session.cas = extended;

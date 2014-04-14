@@ -5,11 +5,11 @@ var path = require('path');
 
 module.exports = {
 
-    routes:function(routes) {
+    adapters:function(adapters) {
         combine({
-            obj:routes,
-            file:'./config/routes.js',
-            kind:'route'
+            obj:adapters,
+            file:['.', 'config', 'adapters.js'].join(path.sep),
+            kind:'adapter'
         });
     },
 
@@ -17,10 +17,19 @@ module.exports = {
     policies:function(policies) {
         combine({
             obj:policies,
-            file:'./config/policies.js',
+            file:['.', 'config', 'policies.js'].join(path.sep),
             kind:'policy'
         });
-    }
+    },
+
+
+    routes:function(routes) {
+        combine({
+            obj:routes,
+            file:['.', 'config', 'routes.js'].join(path.sep),
+            kind:'route'
+        });
+    },
 };
 
 

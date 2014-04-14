@@ -27,7 +27,7 @@ function consoleResponse (cmd, data, responses) {
         before(function(done){
 
             //Set timeout to 41 secs 'cause this process takes longer than normal
-            this.timeout(41000);
+            this.timeout(44000);
 
             //Change directory to tmp to create application
             process.chdir('/tmp');
@@ -50,11 +50,11 @@ function consoleResponse (cmd, data, responses) {
                 exitTrigger:'> sails lift',
                 shouldEcho:false
             })
-            .then(function(){
-                done();
-            })
             .fail(function(err){
                 done(err);
+            })
+            .then(function(){
+                done();
             });
 
 
@@ -94,8 +94,8 @@ function consoleResponse (cmd, data, responses) {
     				console.log("err = "+err);
     				done(err);
     			} else {
-    			chai.assert.deepEqual(data.toString().indexOf("/site/labels/"+testDir+""),63);
-    			done();
+    			    chai.assert.include(data.toString(), "'/site/labels/"+testDir+"'");
+    			    done();
     			}
     		});
     	});
@@ -130,6 +130,52 @@ function consoleResponse (cmd, data, responses) {
 
             chai.assert.includeMembers(policies.ADCoreController.configData, ['isAuthenticated'], ' => configData() isAuthenticated');
             chai.assert.includeMembers(policies.ADCoreController.labelConfigFile, ['isAuthenticated'], ' => labelConfigFile() isAuthenticated');
+        });
+
+
+        it('check contents of config/routes.js file',function(done){
+            fs.readFile("/tmp/"+testDir+"/config/routes.js",function(err,data){
+                if (err){
+                    console.log("err = "+err);
+                    done(err);
+                } else {
+
+                    chai.assert.include(data.toString(),"var routes = module.exports.routes", ' plugin patch properly applied.');
+                    done();
+                }
+            });
+        });
+
+
+
+
+        it('check contents of config/policies.js file',function(done){
+            fs.readFile("/tmp/"+testDir+"/config/policies.js",function(err,data){
+                if (err){
+                    console.log("err = "+err);
+                    done(err);
+                } else {
+
+                    chai.assert.include(data.toString(),"var policies = module.exports.policies", ' plugin patch properly applied.');
+                    done();
+                }
+            });
+        });
+
+
+
+
+        it('check contents of config/adapters.js file',function(done){
+            fs.readFile("/tmp/"+testDir+"/config/adapters.js",function(err,data){
+                if (err){
+                    console.log("err = "+err);
+                    done(err);
+                } else {
+
+                    chai.assert.include(data.toString(),"var adapters = module.exports.adapters", ' plugin patch properly applied.');
+                    done();
+                }
+            });
         });
 
 

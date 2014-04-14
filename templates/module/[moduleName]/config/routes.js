@@ -14,13 +14,13 @@ module.exports = {
   '/': {
     view: 'user/signup'
   },
-  '/': 'MessageController.inbox',
+  '/': '<%= moduleName %>/PluginController.inbox',
   '/': {
-    controller: 'MessageController',
+    controller: '<%= moduleName %>/PluginController',
     action: 'inbox'
   },
-  'post /signup': 'UserController.signup',
-  'get /*(^.*)': 'UserController.profile'
+  'post /signup': '<%= moduleName %>/PluginController.signup',
+  'get /*(^.*)' : '<%= moduleName %>/PluginController.profile'
 
   */
 
