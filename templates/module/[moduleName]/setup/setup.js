@@ -11,11 +11,11 @@ var AD = require('ad-utils');
     var localOptions = {};
 
     // if there is a local options.js file, use that instead
-    if (fs.existsSync('./options.js')) {
-        localOptions = require('./options.js');
+    var pathOptions = path.join(__dirname,  'options.js');
+    if (fs.existsSync(pathOptions)) {
+        localOptions = require(pathOptions);
     }
 
     AD.module.setup(localOptions);
 
 })();
-

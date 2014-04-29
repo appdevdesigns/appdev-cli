@@ -1,6 +1,0 @@
-(function() {
-    var settings = <%- JSON.stringify( settings, null, 8).replace('\n}', '\n    }') %>;
-    for (var s in settings) {
-        AD.config.setValue(s, settings[s]);
-    }
-})();
