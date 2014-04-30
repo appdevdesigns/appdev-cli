@@ -44,7 +44,7 @@ var combine = function( opts ) {
             obj[key] = myObj[key];
         } else {
 
-            AD.log( '<yellow><bold>Warning:</bold> '+ moduleName() + ':  '+opt.kind+' ['+key+'] already defined in sails</yellow>');
+            AD.log( '<yellow><bold>Warning:</bold> '+ moduleName() + ':  '+opts.kind+' ['+key+'] already defined in sails</yellow>');
 
         }
     }
