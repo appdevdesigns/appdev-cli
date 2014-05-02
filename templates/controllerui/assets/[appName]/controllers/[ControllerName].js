@@ -31,7 +31,7 @@ function(){
         init: function (element, options) {
             var self = this;
             options = AD.defaults({
-                    templateDOM: '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
+                    templateDOM: '//<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
             }, options);
             this.options = options;
 
