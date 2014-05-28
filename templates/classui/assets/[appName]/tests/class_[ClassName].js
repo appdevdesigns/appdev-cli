@@ -20,6 +20,26 @@ steal(
         });
 
 
+        it('class definition [AD.classes.<%= appNameSpace %>.<%= ClassName %>] exists ', function(){
+<%
+    // we need to figure out how many object initializations to make:
+    var partsNameSpace = appNameSpace.split('.');
+    var currentNS = '';
+    partsNameSpace.forEach(function(part){
+
+
+        if (currentNS != '') {
+            currentNS += '.';
+        }
+        currentNS += part; 
+
+%>            assert.isDefined(AD.classes.<%= currentNS %> , ' :=> should have been defined ');
+<%
+    });
+%>            assert.isDefined(AD.classes.<%= appNameSpace %>.<%= ClassName %>, ' :=> should have been defined ');
+        });
+
+
         it('myClassMethod() return true', function(){
             assert.ok(iClass.myClassMethod(), ' :=> should have returned true ');
         });
