@@ -2,13 +2,13 @@
 steal(
         // List your Controller's dependencies here:
         'appdev',
-//        '<%= appName %>/models/Projects.js',
+//        '/opstools/<%= name %>/models/[modelName].js',
 //        'appdev/widgets/ad_delete_ios/ad_delete_ios.js',
-//        '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
+//        '/opstools/<%= name %>/views/<%= name %>/<%= name %>.ejs',
 function(){
 
-    // Namespacing conventions:
-    // AD.controllers.[application].[controller]
+    // OpsTool Namespacing conventions:
+    // AD.controllers.opstools.[application].Tool
 <%
     // we need to figure out how many object initializations to make:
     var partsNameSpace = appNameSpace.split('.');
@@ -25,21 +25,23 @@ function(){
 %>    if (typeof AD.controllers.<%= currentNS %> == 'undefined') AD.controllers.<%= currentNS %> = {};
 <%
     });
-%>    AD.controllers.<%= appNameSpace %>.<%= ControllerName %> = AD.classes.UIController.extend({
+%>    AD.controllers.<%= appNameSpace %>.Tool = AD.classes.opsportal.OpsTool.extend({
 
 
         init: function (element, options) {
             var self = this;
             options = AD.defaults({
-                    templateDOM: '//<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
+                    templateDOM: '//opstools/<%= name %>/views/<%= name %>/<%= name %>.ejs',
+                    resize_notification: '<%= name %>.resize',
+                    tool:null   // the parent opsPortal Tool() object
             }, options);
             this.options = options;
 
             // Call parent init
-            AD.classes.UIController.apply(this, arguments);
+            AD.classes.opsportal.OpsTool.prototype.init.apply(this, arguments);
 
 
-            this.dataSource = this.options.dataSource; // AD.models.Projects;
+            this.dataSource = this.options.dataSource; 
 
             this.initDOM();
 

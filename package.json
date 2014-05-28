@@ -12,7 +12,8 @@
     "colog": "~0.1.8",
     "ejs": "~0.8.4",
     "read": "~1.0.5",
-    "mysql": "~2.0.0-alpha9"
+    "mysql": "~2.0.0-alpha9",
+    "ad-utils": "git://github.com/appdevdesigns/ad-utils"
   },
   "devDependencies": {
     "mocha": "~1.12.1",

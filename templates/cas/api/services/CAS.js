@@ -25,10 +25,15 @@ setImmediate(tick);
 
 module.exports.authenticate = function(req, res, callback)
 {
+
     cas.authenticate(req, res, function(err, status, username, extended) {
+
         if (err) {
+console.log('CAS.js:authenticate.cb() : error!');
+console.log(err);
+
             // Error authenticating a proxied JSON request
-            if (req.isJson) {
+            if (req.wantsJSON) {
                 // unexpected CAS error. proxy issue?
                 res.send({
                     success: false,
@@ -71,9 +76,9 @@ module.exports.isAuthenticated = function(req, res, ok)
 
     } else {
         //// User is not yet authenticated
-
         // Handle unproxied JSON service request
-        if (req.isJson && !req.query.ticket) {
+        if (req.wantsJSON && !req.query.ticket) {
+
             // No ticket, so that means the requester is not a CAS proxy.
             // This is an expected normal scenario for JSON requests.
             // Tell the client to open a frame with an HTML page
@@ -81,13 +86,10 @@ module.exports.isAuthenticated = function(req, res, ok)
 
         } else {
             //// Handle HTML page requests & proxied JSON requests
-
             // Automatically redirect to CAS login page
             CAS.authenticate(req, res, function(username, extended) {
                 // Successful CAS authentication
 
-console.log('CAS authenticated(): extended info:');
-console.log(extended);
 
                 var guid = extended.username;
                 if (extended.attributes) {
@@ -95,7 +97,6 @@ console.log(extended);
                         guid = extended.attributes.eaguid;
                     }
                 }
-console.log(' guid: '+guid);
 
                 ADCore.auth.markAuthenticated(req, guid); //req.session.authenticated = true;
                 req.session.cas = extended;
@@ -113,4 +114,9 @@ module.exports.logout = function(req, res, returnURL) {
     req.session.casExtended = undefined;
     cas.logout(req, res, returnURL, true);
 };
+
+
+module.exports.baseURI = function() {
+    return sails.config.cas.baseURL;
+}
 
