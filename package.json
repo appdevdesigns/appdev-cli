@@ -13,18 +13,21 @@
     "ejs": "~0.8.4",
     "read": "~1.0.5",
     "mysql": "~2.0.0-alpha9",
-    "ad-utils": "git://github.com/appdevdesigns/ad-utils"
+    "ad-utils": "git://github.com/appdevdesigns/ad-utils",
+    "circular-json": "^0.1.6",
+    "cli-table": "^0.3.0",
+    "async": "^0.9.0"
   },
   "devDependencies": {
     "mocha": "~1.12.1",
     "chai": "~1.7.2",
     "jquery": "~1.8.3",
-    "sails": "0.9.7",
     "grunt": "0.4.1",
-    "sails-disk": "~0.9.0",
     "ejs": "0.8.4",
     "optimist": "0.3.4",
-    "sails-mysql": "~0.9.5"
+    "sails": "git://github.com/balderdashy/sails",
+    "sails-disk": "git://github.com/balderdashy/sails-disk",
+    "sails-mysql": "git://github.com/balderdashy/sails-mysql"
   },
   "scripts": {
     "start": "node app.js",
@@ -32,5 +35,9 @@
     "test": "make test"
   },
   "author": "Johnny Hausman",
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appdevdesigns/appdev-cli.git"
+  }
 }

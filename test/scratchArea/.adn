@@ -1,4 +1,7 @@
 module.exports = {
-    application:'scratchArea',
-    toRoot:'.'
+    "application": "scratchArea",
+    "toRoot": ".",
+    "defaults": {
+        "connection": "mysql"
+    }
 }

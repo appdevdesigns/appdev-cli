@@ -3,6 +3,8 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var path = require('path');
 var $  = require('jquery');
+var async = require('async');
+
 //var cmd = null;
 
 
@@ -29,13 +31,67 @@ module.exports= {
         adnDir:function(opt) {
             var dfd = $.Deferred();
 
+            async.series([
 
-            fs.mkdir(opt.path,function(err){
 
-                if (err) {
-                    dfd.reject(err);
+                // make sure directory exist!
+                function(next) {
 
-                } else {
+                    fs.exists(opt.path, function (exists) {
+                        if (!exists) {
+
+                            fs.mkdir(opt.path,function(err){
+
+                                if (err) {
+                                    next(err);
+
+                                } else {
+
+                                    next();
+
+                                }
+
+                            });
+
+                        } else {
+                            next();
+                        }
+                    });
+
+                },
+
+
+                // if .adn file exists, remove it
+                function(next) {
+
+                    fs.exists(path.join(opt.path, '.adn'), function (exists) {
+
+                        if (exists) {
+
+                            fs.unlink(path.join(opt.path, '.adn'), function(err) {
+
+                                if (err) {
+                                    next(err);
+
+                                } else {
+
+                                    next();
+                                }
+
+                            });
+
+                        } else {
+
+                            next();
+                        }
+
+                    });
+                },
+
+
+                // now create the .adn file at path
+                function(next){
+
 
                     process.chdir(opt.path);
 
@@ -43,15 +99,15 @@ module.exports= {
                     fs.readFile(adnPath, 'utf8', function(err, adn){
 
                         if (err) {
-                            dfd.reject(err);
+                            next(err);
                         } else {
 
                             fs.writeFile(path.join(opt.path, '.adn'), adn, 'utf8', function(err) {
 
                                 if (err) {
-                                    dfd.reject(err);
+                                    next(err);
                                 } else {
-                                    dfd.resolve();
+                                    next();
                                 }
 
                             });
@@ -60,9 +116,21 @@ module.exports= {
 
                     });
 
+
+                }
+
+            ], function(err, results){
+
+                if (err) {
+                    dfd.reject(err);
+
+                } else {
+
+                    dfd.resolve();
                 }
 
             });
+
 
 
             return dfd;

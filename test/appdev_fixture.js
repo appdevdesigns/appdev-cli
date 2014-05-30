@@ -6,29 +6,65 @@ var path = require('path');
 var $ = require('jquery');
 
 var Util = require('./helpers/util_helper.js');
+var AD = require('ad-utils');
+
 
 var assert = require('chai').assert;
 describe('test appdev fixture :applicationName :resource :fieldList ',function(){
 
+	var tmpAppDir = 'testFixtures';
+
 	//Before the unit tests are executed, create the testing directory structure
 	before(function(done){
-	    this.timeout(10000);
+	    this.timeout(20000);
 
 	    // run this command from the test/scratchArea/ directory
 	    process.chdir(path.join(__dirname, 'scratchArea'));
 
-	    // now run the command to create a fixture
-	    Util.spawn({
+
+
+        var responsesInstall = {
+                "db adaptor":'memory\n',
+                "type of authentication":'\n'
+        };
+
+	    var responses = {
+	    	"default connection" : "\n"
+	    }
+
+	    // First create a new test sails app: tmpApp
+	    AD.spawn.command({
 	        command:'appdev',
-	        options:['fixture', 'testApplication', 'TestModel', 'model_field:string', 'model_field2:string', 'model_field3:integer'],
+	        options:['--noDependencies', 'install', tmpAppDir],
+	        responses:responsesInstall,
 	        shouldEcho:false
-	    })
-	    .then(function(data) {
-	        done();
 	    })
 	    .fail(function(err){
 	        done(err);
+	    })
+	    .then(function(data) {
+
+	    	// run this command from the test/scratchArea/tmpApp directory
+	    	process.chdir(path.join(__dirname, 'scratchArea', tmpAppDir));
+
+	       	// now run the command to create a fixture
+		    AD.spawn.command({
+		        command:'appdev',
+		        options:['fixture', 'testApplication', 'TestModel', 'model_field:string', 'model_field2:string', 'model_field3:integer'],
+		        responses:responses,
+		        exitTrigger:'> You',
+	        	shouldEcho:false
+		    })
+		    .fail(function(err){
+		        done(err);
+		    })
+		    .then(function(data) {
+		        done();
+		    });
 	    });
+
+
+
 
 	});
 
@@ -39,17 +75,16 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 	    process.chdir(path.join(__dirname, '..'));
 
 	    // remove /api & /assets directories
-	    var apiGone = Util.removeDir(path.join(__dirname, 'scratchArea', 'api'));
-	    var assetsGone = Util.removeDir(path.join(__dirname, 'scratchArea', 'assets'));
-	    $.when(apiGone, assetsGone).then(function() {
-
-	        // all good, continue
-	        done();
-	    })
+	    Util.removeDir(path.join(__dirname, 'scratchArea', tmpAppDir))
 	    .fail(function(err){
 
 	        // dang!
 	        done(err);
+	    })
+	    .then(function() {
+
+	        // all good, continue
+	        done();
 	    });
 
 	});
@@ -65,7 +100,7 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 
 	describe('check the TestModelController.js file has the proper data ', function(){
 
-	    var controllerPath = path.join(__dirname,'scratchArea', 'api', 'controllers', 'TestModelController.js');
+	    var controllerPath = path.join(__dirname,'scratchArea', tmpAppDir, 'api', 'controllers', 'TestModelController.js');
 	    var controllerFile = '';
 
 	    before(function(){

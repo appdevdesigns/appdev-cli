@@ -5,33 +5,36 @@ var path = require('path');
 var $ = require('jquery');
 
 var Util = require('./helpers/util_helper.js');
+var AD = require('ad-utils');
+
 
 //the database information to connect to mysql
-var dbInfo = {
-		host: 'localhost',
-		user: 'root',
-		password: 'root',
-		database: 'test_site',
-		port: '3306'
-	}
+var dbInfo;
+
+var DB_TABLE_LABEL = 'site_multilingual_label';
+var DB_TABLE_LANGUAGE = 'sites_multilingual_languages';
+
+var scratchDir = path.join(__dirname, 'scratchArea');
+var testDir = 'testLabels';
+var testPath = path.join(scratchDir, testDir);
 
 
 describe('test appdev labels :applicationName',function(){
 
-    var testPath;
 
 	//create the labels in the database before anything else happens.
 	before(function(done){
 		this.timeout(10000);
 
-		testPath = path.sep+path.join('tmp','testApplicationLabels');
-
-		// run this command from the tmp/testApplication directory
+		// run this command on the /testApplication directory
+        // NOTE: this leaves us in the directory
 	    Util.adnDir({ path:testPath })
+        .fail(function(err){
+            done(err);
+        })
         .then(function(data){
 
             dbInfo = Util.dbInfo();
-
 
             // execute these commands in sequence:
             var seq = [
@@ -62,32 +65,38 @@ describe('test appdev labels :applicationName',function(){
                 }
             ];
 
-            Util.spawnSeq(seq)
+            AD.spawn.series(seq)
+            .fail(function(err){
+                AD.log.error('failed to install appdev defaults for label information.',err);
+                done(err);
+            })
             .then(function(data) {
 
         	    // now run the command to create labels
-        	    Util.spawn({
+        	    AD.spawn.command({
         	        command:'appdev',
         	        options:['labels', 'testApplication', 'testApplication.site.login', 'en', 'Login:'],
         	        shouldEcho:false
         	    })
+                .fail(function(err){
+                    done(err);
+                })
         	    .then(function(data) {
-
 
 
         			var db = mysql.createConnection(dbInfo);
 
         			db.connect();
 
-        			sql = "select * from sites_multilingual_labels "
+        			sql = "select * from "+DB_TABLE_LABEL+" "
         				+ "where label_key = 'testApplication.site.login' "
-        				+ "and label_application = 'testApplication'";
+        				+ "and label_context = 'testApplication'";
 
         			db.query(sql, function(err,rows){
         				if (err){
         					done(err);
         				} else {
-        					langSql = "select * from sites_multilingual_languages";
+        					langSql = "select * from "+DB_TABLE_LANGUAGE;
 
         					db.query(langSql,function(err,langRows){
         						if (err){
@@ -96,26 +105,17 @@ describe('test appdev labels :applicationName',function(){
         							//compared the counts of sites_multilingual_labels to
         							//sites_multilingual_languages to verify that they match
         							//and all the labels were entered into the database.
-        							chai.assert.deepEqual(rows.length,langRows.length);
+        							chai.assert.deepEqual(rows.length,langRows.length, ' initial setup worked! ');
         							done();
         						}
         					});
         				}
         			});
-        	    })
-        	    .fail(function(err){
-        	        done(err);
         	    });
 
 
-            })
-            .fail(function(err){
-                done(err);
             });
 
-        })
-        .fail(function(err){
-            done(err);
         });
 	});
 
@@ -131,8 +131,8 @@ describe('test appdev labels :applicationName',function(){
 
 		db.connect();
 
-		sql = "select * from sites_multilingual_labels "
-			+ "where label_application = 'testApplication' ";
+		sql = "select * from "+DB_TABLE_LABEL+" "
+			+ "where label_context = 'testApplication' ";
 
 		db.query(sql,function(err,rows){
 
@@ -141,7 +141,7 @@ describe('test appdev labels :applicationName',function(){
 			} else {
 
     			//Submit the command to select the labels for a certain application.
-    			Util.spawn({
+    			AD.spawn.command({
     			    command:'appdev',
     			    options:['labels','testApplication'],
     			    onData:function (data) {
@@ -149,26 +149,22 @@ describe('test appdev labels :applicationName',function(){
     			        var line;
 
     	                //split the stdout data by new line and carriage return
-    	                lineSplit = data.toString().split("\r\n");
+    	                lineSplit = data.toString().split("Login:");
 
-    	                //Go through each of the lines looking for the label text (Login:)
-    	                for(line in lineSplit){
-    	                    if (lineSplit[line].indexOf("Login:") != -1) {
-    	                        count++;
-    	                    }
-    	                }
+                        count += lineSplit.length -1;
+
     	            },
     	            shouldEcho:false
     			})
+                .fail(function(err){
+                    done(err);
+                })
     			.then(function(data){
 
     			    //compare the count of the number of label texts in stdout data
                     //to the number of labels in the database for the application.
                     chai.assert.deepEqual(count,rows.length);
                     done();
-    			})
-    			.fail(function(err){
-    			    done(err);
     			});
 
 			}
@@ -187,8 +183,8 @@ describe('test appdev labels :applicationName',function(){
 
 		db.connect();
 
-		sql = "select * from sites_multilingual_labels "
-			+ "where label_application = 'testApplication' "
+		sql = "select * from "+DB_TABLE_LABEL+" "
+			+ "where label_context = 'testApplication' "
 			+ "and label_key = 'testApplication.site.login'";
 
 		db.query(sql,function(err,rows){
@@ -198,7 +194,7 @@ describe('test appdev labels :applicationName',function(){
 			} else {
 
 			    //Submit the command to select the labels for the application and the label_key
-                Util.spawn({
+                AD.spawn.command({
                     command:'appdev',
                     options:['labels', 'testApplication', 'testApplication.site.login'],
                     onData:function (data) {
@@ -206,16 +202,14 @@ describe('test appdev labels :applicationName',function(){
                         var line;
 
                         //split the stdout data by new line and carriage return
-                        lineSplit = data.toString().split("\r\n");
+                        lineSplit = data.toString().split("Login:");
 
-                        //Go through each of the lines looking for the label text (Login:)
-                        for(line in lineSplit){
-                            if (lineSplit[line].indexOf("Login:") != -1) {
-                                count++;
-                            }
-                        }
+                        count += lineSplit.length -1;
                     },
                     shouldEcho:false
+                })
+                .fail(function(err){
+                    done(err);
                 })
                 .then(function(data){
 
@@ -223,9 +217,6 @@ describe('test appdev labels :applicationName',function(){
                     //to the number of labels in the database for the application.
                     chai.assert.deepEqual(count,rows.length);
                     done();
-                })
-                .fail(function(err){
-                    done(err);
                 });
 
 			}
@@ -241,29 +232,41 @@ describe('test appdev labels :applicationName',function(){
 
 		this.timeout(5000);
 
+        var responses = {
+            'you sure':'y\n'
+        };
+
 		// remove our labels
-        Util.spawn({
+        AD.spawn.command({
             command:'appdev',
             options:['labels', '-r', 'testApplication', 'testApplication.site.login'],
+            responses:responses,
+            exitTrigger:'> ',
             shouldEcho:false
+        })
+        .fail(function(err){
+            done(err);
         })
         .then(function(data) {
 
             // remove our testing directory
-            Util.spawn({
+            AD.spawn.command({
                 command:'rm',
                 options:['-R', testPath],
                 shouldEcho:false
             })
+            .fail(function(err){
+                done(err);
+            })
             .then(function(data) {
 
-                // verity labels were removed from the system.
+                // verify labels were removed from the system.
                 var db = mysql.createConnection(dbInfo);
 
                 db.connect();
 
-                sql = "select * from sites_multilingual_labels "
-                    + "where label_application = 'testApplication' "
+                sql = "select * from "+DB_TABLE_LABEL+" "
+                    + "where label_context = 'testApplication' "
                     + "and label_key = 'testApplication.site.login' ";
 
                 db.query(sql,function(err,rows){
@@ -276,14 +279,8 @@ describe('test appdev labels :applicationName',function(){
                     done();
                 });
 
-            })
-            .fail(function(err){
-                done(err);
             });
 
-        })
-        .fail(function(err){
-            done(err);
         });
 
 	});

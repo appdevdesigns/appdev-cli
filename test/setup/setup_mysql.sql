@@ -1,12 +1,12 @@
-CREATE TABLE sites_multilingual_labels (
+CREATE TABLE site_multilingual_label (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
   createdAt datetime DEFAULT NULL,
   updatedAt datetime DEFAULT NULL,
   language_code text,
   label_key text,
   label_label text,
-  label_needstranslation text,
-  label_application text,
+  label_needs_translation text,
+  label_context text,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 
