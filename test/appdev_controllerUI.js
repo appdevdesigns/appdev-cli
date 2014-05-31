@@ -23,7 +23,7 @@ var assert = require('chai').assert;
         AD.spawn.command({
             command:'appdev',
             options:[ 'controllerUI', appName, controllerName ],
-            shouldEcho:false
+//            shouldEcho:false
         })
         .fail(function(err){
             done(err);
@@ -45,23 +45,23 @@ var assert = require('chai').assert;
 
     	    // make sure any previous test director for this test is gone
     	    Util.removeDir(pathForCommand)
+            .fail(function(err){
+                done(err);
+            })
     	    .then(function(data){
 
     	        // now create the cuiTest directory:
     	        Util.adnDir({ path: pathForCommand })
+                .fail(function(err){
+                    done(err);
+                })
     	        .then(function(data){
 
                     // move us into that directory
                     process.chdir(pathForCommand);
                     done();
-    	        })
-    	        .fail(function(err){
-    	            done(err);
     	        });
 
-    	    })
-    	    .fail(function(err){
-    	        done(err);
     	    });
 
 
@@ -106,12 +106,14 @@ var assert = require('chai').assert;
 
                 createCUI(appName, controllerName, function(err){
                     if (err) {
+AD.log('createCUI returned error:');
                         done(err);
                     } else {
-
+AD.log('createCUI ok,  reading file:');
                         fs.readFile(controllerPath, 'utf8', function (err, data) {
 
                             if (err) {
+AD.log('readFile returned error:');
                                 done(err);
                             } else {
 
