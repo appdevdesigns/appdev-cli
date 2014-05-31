@@ -4,6 +4,7 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var path = require('path');
 var $ = require('jquery');
+var AD = require('ad-utils');
 
 var Util = require('./helpers/util_helper.js');
 
@@ -19,16 +20,16 @@ var assert = require('chai').assert;
     var createCUI = function( appName, controllerName, done) {
         // use this function to run the appdev cui command:
 
-        Util.spawn({
+        AD.spawn.command({
             command:'appdev',
             options:[ 'controllerUI', appName, controllerName ],
             shouldEcho:false
         })
-        .then(function(data) {
-            done();
-        })
         .fail(function(err){
             done(err);
+        })
+        .then(function(data) {
+            done();
         });
     };
 
@@ -73,16 +74,16 @@ var assert = require('chai').assert;
     	    process.chdir(initialCWD);
 
     	    // remove /api & /assets directories
-    	    var dirGone = Util.removeDir(pathForCommand);
-    	    $.when(dirGone).then(function() {
+    	    Util.removeDir(pathForCommand)
+            .fail(function(err){
+
+                // dang!
+                done(err);
+            })
+    	    .then(function() {
 
     	        // all good, continue
     	        done();
-    	    })
-    	    .fail(function(err){
-
-    	        // dang!
-    	        done(err);
     	    });
 
     	});
