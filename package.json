@@ -13,7 +13,7 @@
     "ejs": "~0.8.4",
     "read": "~1.0.5",
     "mysql": "~2.0.0-alpha9",
-    "ad-utils": "git://github.com/appdevdesigns/ad-utils",
+    "ad-utils": "git://github.com/appdevdesigns/ad-utils#v10",
     "circular-json": "^0.1.6",
     "cli-table": "^0.3.0",
     "async": "^0.9.0"
