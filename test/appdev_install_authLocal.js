@@ -30,8 +30,8 @@ function consoleResponse (cmd, data, responses) {
 
         before(function(done){
 
-            //Set timeout to 41 secs 'cause this process takes longer than normal
-            this.timeout(44000);
+            //Set timeout to 84 secs 'cause this process takes longer than normal
+            this.timeout(84000);
 
             //Change directory to tmp to create application
             process.chdir(scratchDir);

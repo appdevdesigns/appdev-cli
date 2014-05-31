@@ -18,8 +18,8 @@ var AD = require('ad-utils');
 
         before(function(done){
 
-            //Set timeout to 41 secs 'cause this process takes longer than normal
-            this.timeout(41000);
+            //Set timeout to 82 secs 'cause this process takes longer than normal
+            this.timeout(82000);
 
             // run this command from the test/scratchArea/ directory
             process.chdir(scratchPath);
