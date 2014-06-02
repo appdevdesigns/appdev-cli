@@ -8,8 +8,5 @@ before_script:
 - mysql -hlocalhost -P3306 -uroot -p'root' test_site < test/setup/setup_mysql.sql
 
 script:
-- pwd
 - npm link 
-- ls -alu  /home/travis/build/appdevdesigns/appdev-cli/
-- ls -alu /home/travis/build/appdevdesigns/appdev-cli/templates
 - npm test

@@ -113,8 +113,8 @@ function consoleResponse (cmd, data, responses) {
             var configExists = fs.existsSync(path.join(pathTestDir, "config","appdev.js"));
 
             chai.assert.ok(controllerExists, ' => ADCoreController.js file exists');
-            chai.assert.ok(viewExists, ' => views/adcore/configData.ejs file exists');
-            chai.assert.ok(configExists, ' => views/adcore/configData.ejs file exists');
+            chai.assert.ok(viewExists, ' => views/appdev-core/adcore/configData.ejs file exists');
+            chai.assert.ok(configExists, ' => config/appdev.js file exists');
         });
 
 
