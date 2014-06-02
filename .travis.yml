@@ -9,6 +9,6 @@ before_script:
 
 script:
 - pwd
-- npm install -g appdevdesigns/appdev-cli#develop
+- npm link 
 - appdev --help
 - npm test
