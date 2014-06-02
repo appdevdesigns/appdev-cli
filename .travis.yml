@@ -11,4 +11,7 @@ script:
 - pwd
 - npm link 
 - appdev --help
+- alias ll="ls -alu"
+- ll /home/travis/build/appdevdesigns/appdev-cli/
+- ll /home/travis/build/appdevdesigns/appdev-cli/templates
 - npm test
