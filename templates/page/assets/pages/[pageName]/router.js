@@ -22,7 +22,7 @@ for(var m in router.models) {
 if (listControllers.length == 0) listControllers.push("//        'app/controllers/controller.js'");
 
 
-%><%= listControllers.join(',\n') %>
+%><%- listControllers.join(',\n') %>
 ).then(function(){
 
     // All dependencies loaded by now

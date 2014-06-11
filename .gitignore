@@ -6,6 +6,7 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.DS_Store
 
 pids
 logs
@@ -13,8 +14,14 @@ results
 
 npm-debug.log
 node_modules
+scratchArea
 
 .project
 .settings
 
 .adn
+
+# If your local DB info is different for you machine, you
+# can add a test/helpers/local_config.js with your local settings.
+# but we don't track it in github:
+test/helpers/local_config.js

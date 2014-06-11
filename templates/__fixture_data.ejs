@@ -1,0 +1,39 @@
+
+  _config: {}
+
+  // Fixture Data:
+  // Use this for initial design and testing
+  , find:function(req, res) {
+      
+      var data = [
+<% for (var i=1; i<=3; i++) {
+    var entry = ['        {', '           id: '+i+','];
+
+    for (var f=0; f< fields.length; f++) {
+    
+        entry.push('           '+fields[f]+' : "'+fields[f]+'['+i+']",');
+    }
+    entry.push('           createdAt:"2013/12/01"');
+    entry.push('        },');
+%>
+<%- entry.join('\n') %>
+<% } // next entry %>
+      ];
+      
+      ADCore.comm.success(res, data);
+  }
+
+  , create:function(req, res) {
+      ADCore.comm.success(res,{ status:'created' })
+  }
+
+  , update:function(req, res) {
+      ADCore.comm.success(res,{status:'updated'})
+  }
+
+  , destroy:function(req, res) {
+      ADCore.comm.success(res,{status:'destroyed'})
+  }
+  
+  
+};
