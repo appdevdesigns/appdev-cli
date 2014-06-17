@@ -109,7 +109,7 @@ function consoleResponse (cmd, data, responses) {
         it('check for ADCore files',function(){
 
             var controllerExists = fs.existsSync(path.join(pathTestDir, "api", "controllers", "appdev-core", "ADCoreController.js"));
-            var viewExists = fs.existsSync(path.join(pathTestDir, "views", "appdev-core", "adcore", "configData.ejs"));
+            var viewExists = fs.existsSync(path.join(pathTestDir, "views", "appdev-core", "adcore", "configdata.ejs"));
             var configExists = fs.existsSync(path.join(pathTestDir, "config","appdev.js"));
 
             chai.assert.ok(controllerExists, ' => ADCoreController.js file exists');
