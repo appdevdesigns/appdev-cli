@@ -36,7 +36,7 @@ function(){
             this.options = options;
 
             // Call parent init
-            AD.classes.UIController.apply(this, arguments);
+            AD.classes.UIController.prototype.init.apply(this, arguments);
 
 
             this.dataSource = this.options.dataSource; // AD.models.Projects;
