@@ -23,7 +23,7 @@ var assert = require('chai').assert;
         AD.spawn.command({
             command:'appdev',
             options:[ 'controllerUI', appName, controllerName ],
-//            shouldEcho:false
+            shouldEcho:false
         })
         .fail(function(err){
             done(err);
@@ -106,14 +106,14 @@ var assert = require('chai').assert;
 
                 createCUI(appName, controllerName, function(err){
                     if (err) {
-AD.log('createCUI returned error:');
+//AD.log('createCUI returned error:');
                         done(err);
                     } else {
-AD.log('createCUI ok,  reading file:');
+//AD.log('createCUI ok,  reading file:');
                         fs.readFile(controllerPath, 'utf8', function (err, data) {
 
                             if (err) {
-AD.log('readFile returned error:');
+//AD.log('readFile returned error:');
                                 done(err);
                             } else {
 
