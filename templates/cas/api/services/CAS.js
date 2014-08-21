@@ -12,7 +12,8 @@ var tick = function() {
     if (typeof sails != 'undefined') {
         cas = new CASObject({
             base_url: sails.config.cas.baseURL,
-            version: 2.0
+            version: 2.0,
+            external_pgt_url: sails.config.cas.proxyURL // can be undefined
         });
     } else {
         // nope, still not ready, so wait some more.
@@ -89,8 +90,11 @@ module.exports.isAuthenticated = function(req, res, ok)
             // Automatically redirect to CAS login page
             CAS.authenticate(req, res, function(username, extended) {
                 // Successful CAS authentication
+                
+                // If we are using a CAS proxy, the PGTIOU will be stored
+                // as extended['PGTIOU']
 
-
+                
                 var guid = extended.username;
                 if (extended.attributes) {
                     if (extended.attributes.eaguid) {
