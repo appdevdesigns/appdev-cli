@@ -95,6 +95,14 @@ var AD = require('ad-utils');
 
         it('make sure config/local.js  initialized properly with cas settings',function(){
 
+var fileContents = fs.readFileSync(path.join(__dirname, 'scratchArea', testDir, "config", "local.js"));
+console.log();
+console.log();
+console.log('--------------------');
+console.log(fileContents);
+console.log('--------------------');
+console.log();
+console.log();
             var config = require(path.join(__dirname, 'scratchArea', testDir, "config", "local.js")).cas;
 
             chai.assert.property(config, 'baseURL', ' => there is an baseURL local config present');
