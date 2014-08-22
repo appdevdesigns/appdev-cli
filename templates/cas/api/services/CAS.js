@@ -2,6 +2,7 @@
  * CAS related functions
  */
 
+var $ = require('jquery-deferred');
 var CASObject = require('cas');
 var cas;
 
@@ -65,6 +66,39 @@ console.log(err);
             return callback(username, extended);
         }
     });
+};
+
+
+
+// Obtain a CAS proxy ticket for a given service URL.
+// This requires that the site has been set up with a working proxyURL option.
+//
+// @param req httpRequest
+// @param targetService string
+//      The URL you are going to fetch with the proxy ticket
+// @param function callback
+//      (Optional) The proxy ticket will be delivered this callback function.
+// @return Deferred
+module.exports.getProxyTicket = function(req, targetService, callback) {
+    var dfd = $.Deferred();
+    
+    if (!req.session.cas.PGTIOU) {
+        var err = new Error('PGTIOU not found in session. Make sure proxyURL is working.');
+        dfd.reject(err);
+        callback && callback(err);
+    }
+    else {
+        cas.getProxyTicket(req.session.cas.PGTIOU, targetService, function(err, PT) {
+            if (err) {
+                dfd.reject(err);
+            } else {
+                dfd.resolve(PT);
+            }
+            callback && callback(err, PT);
+        });
+    }
+    
+    return dfd;
 };
 
 
