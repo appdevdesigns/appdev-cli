@@ -2,7 +2,7 @@
  * CAS related functions
  */
 
-var $ = require('jquery-deferred');
+var AD = require('ad-utils');
 var CASObject = require('cas');
 var cas;
 
@@ -37,10 +37,14 @@ console.log(err);
             // Error authenticating a proxied JSON request
             if (req.wantsJSON) {
                 // unexpected CAS error. proxy issue?
-                res.send({
-                    success: false,
-                    message: err.message
-                }, 500);
+                if (ADCore) {
+                    ADCore.comm.error(res, err, 500);
+                } else {
+                    res.send({
+                        success: false,
+                        message: err.message
+                    }, 500);
+                }
             }
             // Error authenticating a normal web page
             else {
@@ -80,7 +84,7 @@ console.log(err);
 //      (Optional) The proxy ticket will be delivered this callback function.
 // @return Deferred
 module.exports.getProxyTicket = function(req, targetService, callback) {
-    var dfd = $.Deferred();
+    var dfd = AD.sal.Deferred();
     
     if (!req.session.cas.PGTIOU) {
         var err = new Error('PGTIOU not found in session. Make sure proxyURL is working.');
@@ -117,7 +121,7 @@ module.exports.isAuthenticated = function(req, res, ok)
             // No ticket, so that means the requester is not a CAS proxy.
             // This is an expected normal scenario for JSON requests.
             // Tell the client to open a frame with an HTML page
-            ADCore.comm.reauth(res, { authType:'CAS', casMessage:"Client may request any HTML page to begin session", casExample:'/site/login will work.'});
+            ADCore.comm.reauth(res);
 
         } else {
             //// Handle HTML page requests & proxied JSON requests
