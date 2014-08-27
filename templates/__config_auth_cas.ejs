@@ -2,7 +2,7 @@
    // AppDev: your CAS instance config here:
   ,cas:{
       baseURL: "<%= baseURL %>",
-      proxyURL: undefined
+      proxyURL: <%  if (proxyURL == 'none') { %>undefined<% } else { %>"<%= proxyURL %>"<% } %>
   }
   
 };
