@@ -2,6 +2,7 @@
  * CAS related functions
  */
 
+var $ = require('jquery-deferred');
 var CASObject = require('cas');
 var cas;
 
@@ -12,7 +13,8 @@ var tick = function() {
     if (typeof sails != 'undefined') {
         cas = new CASObject({
             base_url: sails.config.cas.baseURL,
-            version: 2.0
+            version: 2.0,
+            external_pgt_url: sails.config.cas.proxyURL // can be undefined
         });
     } else {
         // nope, still not ready, so wait some more.
@@ -68,6 +70,39 @@ console.log(err);
 
 
 
+// Obtain a CAS proxy ticket for a given service URL.
+// This requires that the site has been set up with a working proxyURL option.
+//
+// @param req httpRequest
+// @param targetService string
+//      The URL you are going to fetch with the proxy ticket
+// @param function callback
+//      (Optional) The proxy ticket will be delivered this callback function.
+// @return Deferred
+module.exports.getProxyTicket = function(req, targetService, callback) {
+    var dfd = $.Deferred();
+    
+    if (!req.session.cas.PGTIOU) {
+        var err = new Error('PGTIOU not found in session. Make sure proxyURL is working.');
+        dfd.reject(err);
+        callback && callback(err);
+    }
+    else {
+        cas.getProxyTicket(req.session.cas.PGTIOU, targetService, function(err, PT) {
+            if (err) {
+                dfd.reject(err);
+            } else {
+                dfd.resolve(PT);
+            }
+            callback && callback(err, PT);
+        });
+    }
+    
+    return dfd;
+};
+
+
+
 module.exports.isAuthenticated = function(req, res, ok)
 {
  // User is already authenticated, proceed to controller
@@ -89,8 +124,11 @@ module.exports.isAuthenticated = function(req, res, ok)
             // Automatically redirect to CAS login page
             CAS.authenticate(req, res, function(username, extended) {
                 // Successful CAS authentication
+                
+                // If we are using a CAS proxy, the PGTIOU will be stored
+                // as extended['PGTIOU']
 
-
+                
                 var guid = extended.username;
                 if (extended.attributes) {
                     if (extended.attributes.eaguid) {
