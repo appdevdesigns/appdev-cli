@@ -33,7 +33,8 @@ var AD = require('ad-utils');
                     "password:":'\n',
                     "database:":'test_site\n',
                     "type of authentication":'CAS\n',
-                    "cas server:":'testServerURL\n'
+                    "cas server:":'testServerURL\n',
+                    "proxy server:":'testProxyURL\n'
             };
 
             AD.spawn.command({
@@ -87,8 +88,11 @@ var AD = require('ad-utils');
 
             var config = require(configPath).cas;
 
-//            chai.assert.property(config, 'baseURL', ' => there is an baseURL configuration present');
-//            chai.assert.equal(config.baseURL, 'testServerURL', ' => authType == CAS');
+            chai.assert.property(config, 'baseURL', ' => there is an baseURL configuration present');
+            chai.assert.equal(config.baseURL, 'https://signin.example.com:443/cas', ' => baseURL set properly');
+
+            chai.assert.notProperty(config, 'proxyURL', ' => there is no proxyURL configuration present');
+            // chai.assert.equal(config.proxyURL, 'testProxyURL', ' => proxyURL set properly');
 
         });
 
@@ -99,6 +103,9 @@ var AD = require('ad-utils');
 
             chai.assert.property(config, 'baseURL', ' => there is an baseURL local config present');
             chai.assert.equal(config.baseURL, 'testServerURL', ' => url == testServerURL');
+
+            chai.assert.property(config, 'proxyURL', ' => there is an proxyURL configuration present');
+            chai.assert.equal(config.proxyURL, 'testProxyURL', ' => proxyURL set properly');
 
         });
     });
