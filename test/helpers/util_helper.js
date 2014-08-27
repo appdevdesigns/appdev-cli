@@ -2,7 +2,8 @@ var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
 var fs = require('fs');
 var path = require('path');
-var $  = require('jquery');
+// var $  = require('jquery');
+var AD = require('ad-utils');
 var async = require('async');
 
 //var cmd = null;
@@ -29,7 +30,7 @@ function consoleResponse (cmd, data, responses) {
 module.exports= {
 
         adnDir:function(opt) {
-            var dfd = $.Deferred();
+            var dfd = AD.sal.Deferred();
 
             async.series([
 
@@ -95,7 +96,7 @@ module.exports= {
 
                     process.chdir(opt.path);
 
-                    var adnPath = path.resolve(path.join(__dirname, '..', '..', 'templates', 'install', '.adn'));
+                    var adnPath = path.resolve(path.join(__dirname, '..', '..', 'templates', 'adn', '.adn'));
                     fs.readFile(adnPath, 'utf8', function(err, adn){
 
                         if (err) {
@@ -164,7 +165,7 @@ module.exports= {
 
 
         spawn: function(opt) {  // command, options, responses, exitTrigger) {
-            var dfd = $.Deferred();
+            var dfd = AD.sal.Deferred();
 
             opt.responses = opt.responses || null;
             if(typeof opt.shouldEcho == 'undefined') opt.shouldEcho = true;
@@ -224,7 +225,7 @@ module.exports= {
 
         spawnSeq:function( cmds ) {
           var self = this;
-          var dfd = $.Deferred();
+          var dfd = AD.sal.Deferred();
 
           var runIt = function(indx, list) {
 
@@ -251,7 +252,7 @@ module.exports= {
 
 
         removeDir: function(path, done) {
-            var dfd = $.Deferred();
+            var dfd = AD.sal.Deferred();
 
             // remove the indicated directory
             exec('rm -Rf '+path,function(err,stdout,stderr){
