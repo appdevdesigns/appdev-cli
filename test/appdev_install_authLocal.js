@@ -84,25 +84,25 @@ function consoleResponse (cmd, data, responses) {
 
 
 
-    	it('check for setup.js file',function(done){
+        it('check for setup.js file',function(done){
 
-    		fs.exists(fileSetup, function(exists){
-    			chai.assert.deepEqual(exists,true);
-    			done();
-    		});
-    	});
+            fs.exists(fileSetup, function(exists){
+                chai.assert.deepEqual(exists,true);
+                done();
+            });
+        });
 
-    	it('check contents of setup.js file',function(done){
-    		fs.readFile(fileSetup, function(err,data){
-    			if (err){
-    				console.log("err = "+err);
-    				done(err);
-    			} else {
-    			    chai.assert.include(data.toString(), "'/site/labels/"+testDir+"'");
-    			    done();
-    			}
-    		});
-    	});
+        it('check contents of setup.js file',function(done){
+            fs.readFile(fileSetup, function(err,data){
+                if (err){
+                    console.log("err = "+err);
+                    done(err);
+                } else {
+                    chai.assert.include(data.toString(), "'/site/labels/"+testDir+"'");
+                    done();
+                }
+            });
+        });
 
 
 
@@ -193,6 +193,27 @@ function consoleResponse (cmd, data, responses) {
 
             chai.assert.property(config, 'authType', ' => there is an authType configuration present');
             chai.assert.equal(config.authType, 'local', ' => authType == local');
+        });
+
+
+        it('check grunt hook disabled',function( done){
+            fs.readFile(path.join(pathTestDir, ".sailsrc"), 'utf8', function(err, data){
+
+                if (err) {
+                    done(err);
+                } else {
+
+                    var sailsRC = JSON.parse(data);
+
+                    chai.assert.property(sailsRC, 'hooks', ' => .sailsrc .hooks  set');
+                    chai.assert.property(sailsRC.hooks, 'grunt', ' => .sailsrc .hooks.grunt  set');
+                    chai.assert.isFalse(sailsRC.hooks.grunt, ' => .sailsrc.hooks.grunt = false');
+
+                    done();
+
+                }
+
+            });
         });
     });
 
