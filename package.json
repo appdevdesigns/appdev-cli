@@ -15,6 +15,7 @@
     "colog": "~0.1.8",
     "commander": "~2.0.0",
     "ejs": "~0.8.4",
+    "lodash-node": "^2.4.1",
     "mysql": "~2.0.0-alpha9",
     "read": "~1.0.5",
     "steal-tools": "^0.4.0"
