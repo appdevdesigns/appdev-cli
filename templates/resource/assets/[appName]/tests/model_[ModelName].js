@@ -34,6 +34,18 @@ steal(
 <%
     });
 %>            assert.isDefined(AD.models.<%= appNameSpace %>.<%= ModelName %>, ' :=> should have been defined ');
+<%
+
+    //// Make sure our posted Model Name is in right format:
+    //// appNameSpace.ModelName
+    //// or 
+    //// ModelName 
+
+    var correctModelName = appNameSpace;
+    if (correctModelName != '' ) correctModelName += '.';
+    correctModelName += ModelName;
+
+%>               assert.isNotNull(AD.Model.get("<%= correctModelName %>"), ' :=> did not return null');
         });
 
     });
