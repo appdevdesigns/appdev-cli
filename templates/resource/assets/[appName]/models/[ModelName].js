@@ -5,18 +5,7 @@ steal(
 
     // Namespacing conventions:
     // AD.Model.extend('[application].[Model]', {static}, {instance} );  --> Object
-<%
-
-    //// Make sure our posted Model Name is in right format:
-    //// appNameSpace.ModelName
-    //// or 
-    //// ModelName 
-
-    var correctModelName = appNameSpace;
-    if (correctModelName != '' ) correctModelName += '.';
-    correctModelName += ModelName;
-
-%>    AD.Model.extend('<%= correctModelName %>', {
+    AD.Model.extend('<%= correctModelName %>', {
 /*
         findAll: 'GET /<%= modelname %>/find',
         findOne: 'GET /<%= modelname %>/{id}',
