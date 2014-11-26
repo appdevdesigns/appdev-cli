@@ -53,6 +53,7 @@ steal(
 <%
     });
 %>            assert.isDefined(AD.controllers.<%= appNameSpace %>.<%= ControllerName %>, ' :=> should have been defined ');
+              assert.isNotNull(AD.Control.get('<%= correctControllerName %>'), ' :=> returns our controller. ');
         });
 
 
