@@ -3,23 +3,8 @@ steal(
 ).then( function(){
 
     // Namespacing conventions:
-    // AD.models_base.[application].[Model]  --> Object
-<%
-    // we need to figure out how many object initializations to make:
-    var partsNameSpace = appNameSpace.split('.');
-    var currentNS = '';
-    partsNameSpace.forEach(function(part){
-
-
-        if (currentNS != '') {
-            currentNS += '.';
-        }
-        currentNS += part;  //partsNameSpace[p];
-
-%>    if (typeof AD.models_base.<%= currentNS %> == 'undefined') AD.models_base.<%= currentNS %> = {};
-<%
-    });
-%>    AD.models_base.<%= appNameSpace %>.<%= ModelName %> = can.Model.extend({
+    // AD.Model.Base.extend("[application].[Model]" , { static }, {instance} );  --> Object
+    AD.Model.Base.extend("<%= correctModelName %>", {
         findAll: 'GET /<%= modelname %>/find',
         findOne: 'GET /<%= modelname %>/{id}',
         create:  'POST /<%= modelname %>/create',
@@ -32,13 +17,13 @@ steal(
         fieldLabel:'<%= fieldLabel %>'
     },{
         model: function() {
-            return AD.models.<%= appNameSpace %>.<%= ModelName %>;
+            return AD.Model.get('<%= correctModelName %>'); //AD.models.<%= appNameSpace %>.<%= ModelName %>;
         },
         getID: function() {
-            return this.attr(AD.models.<%= appNameSpace %>.<%= ModelName %>.fieldId) || 'unknown id field';
+            return this.attr(this.model().fieldId) || 'unknown id field';
         },
         getLabel: function() {
-            return this.attr(AD.models.<%= appNameSpace %>.<%= ModelName %>.fieldLabel) || 'unknown label field';
+            return this.attr(this.model().fieldLabel) || 'unknown label field';
         }
     });
 

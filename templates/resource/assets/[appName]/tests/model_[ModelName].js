@@ -34,6 +34,7 @@ steal(
 <%
     });
 %>            assert.isDefined(AD.models.<%= appNameSpace %>.<%= ModelName %>, ' :=> should have been defined ');
+               assert.isNotNull(AD.Model.get("<%= correctModelName %>"), ' :=> did not return null');
         });
 
     });
