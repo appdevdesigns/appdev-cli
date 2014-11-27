@@ -1,7 +1,7 @@
 ,
   "ssl":{
-      "key": "<%= key %>",
-      "cert": "<%= cert %>"
+      "key": fs.readFileSync("<%= key %>"),
+      "cert": fs.readFileSync("<%= cert %>")
   }
   
-};
+}
