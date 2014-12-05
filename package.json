@@ -1,6 +1,6 @@
 {
   "name": "appdev",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "command line utilities for appDev projects",
   "main": "lib/main.js",
   "bin": {
@@ -16,9 +16,9 @@
     "commander": "~2.0.0",
     "ejs": "~0.8.4",
     "lodash-node": "^2.4.1",
+    "moment": "^2.8.4",
     "mysql": "~2.0.0-alpha9",
-    "read": "~1.0.5",
-    "steal-tools": "^0.4.0"
+    "read": "~1.0.5"
   },
   "devDependencies": {
     "mocha": "~1.12.1",
