@@ -4,23 +4,8 @@ steal(
 ).then( function(){
 
     // Namespacing conventions:
-    // AD.models.[application].[Model]  --> Object
-<%
-    // we need to figure out how many object initializations to make:
-    var partsNameSpace = appNameSpace.split('.');
-    var currentNS = '';
-    partsNameSpace.forEach(function(part){
-
-
-        if (currentNS != '') {
-            currentNS += '.';
-        }
-        currentNS += part;  //partsNameSpace[p];
-
-%>    if (typeof AD.models.<%= currentNS %> == 'undefined') AD.models.<%= currentNS %> = {};
-<%
-    });
-%>    AD.models.<%= appNameSpace %>.<%= ModelName %> = AD.models_base.<%= appNameSpace %>.<%= ModelName %>.extend({
+    // AD.Model.extend('[application].[Model]', {static}, {instance} );  --> Object
+    AD.Model.extend('<%= correctModelName %>', {
 /*
         findAll: 'GET /<%= modelname %>/find',
         findOne: 'GET /<%= modelname %>/{id}',

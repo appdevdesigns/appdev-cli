@@ -1,0 +1,19 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8"
+"Content-Transfer-Encoding: 8bit"
+
+#. #########################################
+#. Labels for context: <%- context %>
+#. Source language: <%- source %>
+#. Target language: <%- dest %>
+#. #########################################
+
+
+<% labels.forEach(function(label) {   %>
+#. path: <%- label['label_path'] %>
+#. code: <%- dest %>
+#. key: <%- label['label_key'] %>
+msgid "<%- label['label_source'] %>"
+msgstr "<%- label['label_label'] %>"
+<% }) %>
