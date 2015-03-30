@@ -5,11 +5,11 @@ steal(
     // Namespacing conventions:
     // AD.Model.Base.extend("[application].[Model]" , { static }, {instance} );  --> Object
     AD.Model.Base.extend("<%= correctModelName %>", {
-        findAll: 'GET /<%= modelname %>/find',
-        findOne: 'GET /<%= modelname %>/{id}',
-        create:  'POST /<%= modelname %>/create',
-        update:  'PUT /<%= modelname %>/update/{id}',
-        destroy: 'DELETE /<%= modelname %>/destroy/{id}.json',
+        findAll: 'GET /<%= modelURL %>',
+        findOne: 'GET /<%= modelURL %>/{id}',
+        create:  'POST /<%= modelURL %>',
+        update:  'PUT /<%= modelURL %>/{id}',
+        destroy: 'DELETE /<%= modelname %>/{id}',
         describe: function() {
             return <%- description %>;
         },
