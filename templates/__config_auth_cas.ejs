@@ -2,7 +2,8 @@
    // AppDev: your CAS instance config here:
   ,cas:{
       baseURL: "<%= baseURL %>",
-      pgtURL : <%  if (pgtURL == 'none') { %>undefined<% } else { %>"<%= pgtURL %>"<% } %>
+      pgtURL : <%  if (pgtURL == 'none') { %>undefined<% } else { %>"<%= pgtURL %>"<% } %>,
+      guidKey: "<%= guidKey || 'eaguid' %>"
   }
   
 };
