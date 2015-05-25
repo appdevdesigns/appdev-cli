@@ -15,6 +15,8 @@ describe('test appdev adn ',function(){
 
     before(function(done){
 
+        this.timeout(10000);
+
         async.series([
 
             // step 1: create testPath

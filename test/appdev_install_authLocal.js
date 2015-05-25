@@ -23,15 +23,15 @@ function consoleResponse (cmd, data, responses) {
     var testDir = 'testApplication';
     var pathTestDir = path.join(scratchDir, testDir);
 
-    var fileSetup = path.join(pathTestDir, 'assets', testDir, 'setup.js');
+    var fileSetup = path.join(pathTestDir, 'assets', testDir, testDir+'.js');
 
     describe('authLocal: test appdev install :applicationName',function(){
 
 
         before(function(done){
 
-            //Set timeout to 84 secs 'cause this process takes longer than normal
-            this.timeout(84000);
+            //Set timeout to 124 secs 'cause this process takes longer than normal
+            this.timeout(124000);
 
             //Change directory to tmp to create application
             process.chdir(scratchDir);
@@ -45,7 +45,8 @@ function consoleResponse (cmd, data, responses) {
                     "password:":'\n',
                     "database:":'test_site\n',
 */
-                    "type of authentication":'local\n'
+                    "type of authentication":'local\n',
+                    "SSL":'\n'
             };
 
             AD.spawn.command({
@@ -54,6 +55,7 @@ function consoleResponse (cmd, data, responses) {
                 responses:responses,
                 exitTrigger:'> sails lift',
                 shouldEcho:false
+// shouldEcho:true
             })
             .fail(function(err){
                 done(err);
@@ -98,7 +100,7 @@ function consoleResponse (cmd, data, responses) {
                     console.log("err = "+err);
                     done(err);
                 } else {
-                    chai.assert.include(data.toString(), "'/site/labels/"+testDir+"'");
+                    chai.assert.include(data.toString(), "'/site/labels/"+testDir+".js'");
                     done();
                 }
             });

@@ -16,7 +16,7 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 
 	//Before the unit tests are executed, create the testing directory structure
 	before(function(done){
-	    this.timeout(20000);
+	    this.timeout(40000);
 
 	    // run this command from the test/scratchArea/ directory
 	    process.chdir(path.join(__dirname, 'scratchArea'));
@@ -25,7 +25,8 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 
         var responsesInstall = {
                 "db adaptor":'memory\n',
-                "type of authentication":'\n'
+                "type of authentication":'\n',
+                "SSL":'\n'
         };
 
 	    var responses = {
@@ -38,6 +39,7 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 	        options:['--noDependencies', 'install', tmpAppDir],
 	        responses:responsesInstall,
 	        shouldEcho:false
+// shouldEcho:true
 	    })
 	    .fail(function(err){
 	        done(err);
@@ -54,6 +56,7 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 		        responses:responses,
 		        exitTrigger:'> You',
 	        	shouldEcho:false
+// shouldEcho:true
 		    })
 		    .fail(function(err){
 		        done(err);

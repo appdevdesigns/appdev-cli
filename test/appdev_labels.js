@@ -243,6 +243,7 @@ describe('test appdev labels :applicationName',function(){
             responses:responses,
             exitTrigger:'> ',
             shouldEcho:false
+// shouldEcho:true
         })
         .fail(function(err){
             done(err);
@@ -273,6 +274,7 @@ describe('test appdev labels :applicationName',function(){
                     if (err){
                         done(err);
                     }
+
                     //Verify that the database does not have any labels
                     //for the application and key specified
                     chai.assert.deepEqual(count,rows.length);

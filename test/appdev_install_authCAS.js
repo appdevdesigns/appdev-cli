@@ -19,7 +19,7 @@ var AD = require('ad-utils');
         before(function(done){
 
             //Set timeout to 82 secs 'cause this process takes longer than normal
-            this.timeout(82000);
+            this.timeout(120000);
 
             // run this command from the test/scratchArea/ directory
             process.chdir(scratchPath);
@@ -34,7 +34,9 @@ var AD = require('ad-utils');
                     "database:":'test_site\n',
                     "type of authentication":'CAS\n',
                     "cas server:":'testServerURL\n',
-                    "proxy server:":'testProxyURL\n'
+                    "pgt server:":'testProxyURL\n',
+                    "SSL":'\n',
+                    'guid':'\n'
             };
 
             AD.spawn.command({
@@ -43,6 +45,7 @@ var AD = require('ad-utils');
                 responses:responses,
                 exitTrigger:'> sails lift',
                 shouldEcho:false
+// shouldEcho:true
             })
             .fail(function(err){
                 done(err);
@@ -55,6 +58,8 @@ var AD = require('ad-utils');
 
 
         after(function(done){
+
+            this.timeout(40000);
 
             //Change directory to tmp to delete the application
             process.chdir(scratchPath);
@@ -91,7 +96,7 @@ var AD = require('ad-utils');
             chai.assert.property(config, 'baseURL', ' => there is an baseURL configuration present');
             chai.assert.equal(config.baseURL, 'https://signin.example.com:443/cas', ' => baseURL set properly');
 
-            chai.assert.notProperty(config, 'proxyURL', ' => there is no proxyURL configuration present');
+            chai.assert.notProperty(config, 'pgtURL', ' => there is no proxyURL configuration present');
             // chai.assert.equal(config.proxyURL, 'testProxyURL', ' => proxyURL set properly');
 
         });
@@ -104,8 +109,8 @@ var AD = require('ad-utils');
             chai.assert.property(config, 'baseURL', ' => there is an baseURL local config present');
             chai.assert.equal(config.baseURL, 'testServerURL', ' => url == testServerURL');
 
-            chai.assert.property(config, 'proxyURL', ' => there is an proxyURL configuration present');
-            chai.assert.equal(config.proxyURL, 'testProxyURL', ' => proxyURL set properly');
+            chai.assert.property(config, 'pgtURL', ' => there is an pgtURL configuration present');
+            chai.assert.equal(config.pgtURL, 'testProxyURL', ' => pgtURL set properly');
 
         });
     });

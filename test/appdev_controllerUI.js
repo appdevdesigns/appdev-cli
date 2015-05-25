@@ -141,11 +141,11 @@ var assert = require('chai').assert;
                 assert.isTrue(found,' => yup, our view exists.');
             });
 
-
-            it(' -> the controller has 1 == applicationNameSpace check ',function(){
-                var parts = controllerFile.split("'undefined'");
-                assert.equal(parts.length, 2, ' => 1 application Name Space check');
-            });
+            // We no longer need to do this:
+            // it(' -> the controller has 1 == applicationNameSpace check ',function(){
+            //     var parts = controllerFile.split("'undefined'");
+            //     assert.equal(parts.length, 2, ' => 1 application Name Space check');
+            // });
 
         });  // End TEST 1
 
@@ -204,12 +204,12 @@ var assert = require('chai').assert;
                 });
 
 
-                it(' -> the controller has 2 == applicationNameSpace checks ',
-                    function(){
-                        var parts = controllerFile.split("'undefined'");
-                        assert.equal(parts.length, 3,
-                            ' => 2 application Name Space checks');
-                });
+                // it(' -> the controller has 2 == applicationNameSpace checks ',
+                //     function(){
+                //         var parts = controllerFile.split("'undefined'");
+                //         assert.equal(parts.length, 3,
+                //             ' => 2 application Name Space checks');
+                // });
 
         });  // End TEST 2
 
@@ -267,12 +267,12 @@ var assert = require('chai').assert;
                 });
 
 
-                it(' -> the controller has 3 == applicationNameSpace checks ',
-                    function(){
-                        var parts = controllerFile.split("'undefined'");
-                        assert.equal(parts.length, 4,
-                            ' => 2 application Name Space checks');
-                });
+                // it(' -> the controller has 3 == applicationNameSpace checks ',
+                //     function(){
+                //         var parts = controllerFile.split("'undefined'");
+                //         assert.equal(parts.length, 4,
+                //             ' => 2 application Name Space checks');
+                // });
 
         });  // End TEST 3
 
