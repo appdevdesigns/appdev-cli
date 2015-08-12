@@ -21,7 +21,14 @@ module.exports.appdev = {
 
 
   // Which language is the default language to use when none specified:
-  'lang.default': 'en'
+  'lang.default': 'en',
+
+
+  // // for testing purposes: 
+  // // note: this will only be used in "development" mode
+  // test: {
+  // 	anonymousUserID:'specify.User.id'
+  // }
 
 
 };
