@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-- "0.10"
+- "stable"
 
 before_script:
 - npm install -g  balderdashy/sails appdevdesigns/appdev-cli#develop
 - cd /tmp
+- chmod +x /home/travis/build/[gitRepo]/test/setup/install.sh
 - /home/travis/build/[gitRepo]/test/setup/install.sh
 - cd ad-test/node_modules
 - mv /home/travis/build/[gitRepo] .

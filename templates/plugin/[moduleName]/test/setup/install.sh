@@ -1,6 +1,3 @@
 #/usr/bin/ksh
 
-appdev install ad-test <<EOF
-memory
-local
-EOF
+appdev install ad-test --develop --travisCI
