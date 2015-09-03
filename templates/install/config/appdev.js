@@ -10,7 +10,8 @@ module.exports.appdev = {
 
   // Which Type of authentication mechanism is in place for the current setup:
   // 'local' : basic username / password, successfully stored users session
-  // 'CAS'   : utilize Central Authentication System
+  // 'CAS'   : utilize Central Authentication Service
+  // 'google': Google OAuth2
   'authType': '[[authType]]',
 
 
