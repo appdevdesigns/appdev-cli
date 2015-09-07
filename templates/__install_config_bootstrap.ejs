@@ -2,8 +2,9 @@
  * Bootstrap
  * (sails.config.bootstrap)
  *
- * An asynchronous bootstrap function that runs before your Sails app gets lifted.
- * This gives you an opportunity to set up your data model, run jobs, or perform some special logic.
+ * An asynchronous bootstrap function that runs before your Sails app gets 
+ * lifted. This gives you an opportunity to set up your data model, run jobs, 
+ * or perform some special logic.
  *
  * For more information on bootstrapping your app, check out:
  * http://links.sailsjs.org/docs/config/bootstrap
@@ -13,9 +14,14 @@
 ////
 //// Appdev Plugin Modification:
 ////
+var path = require('path');
 var async = require('async');
 var AD = require('ad-utils');
 var plugins = [];
+
+
+// Globally preload the ADCore service. It is needed by the policies.
+ADCore = require(path.join(process.cwd(), 'api', 'services', 'ADCore.js'));
 
 
 module.exports.bootstrap = function(cb) {
