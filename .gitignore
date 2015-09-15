@@ -14,7 +14,8 @@ results
 
 npm-debug.log
 node_modules
-scratchArea
+test/scratchArea/*
+!test/scratchArea/.gitkeep
 
 .project
 .settings

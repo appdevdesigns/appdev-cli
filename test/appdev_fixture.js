@@ -38,8 +38,8 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 	        command:'appdev',
 	        options:['--noDependencies', 'install', tmpAppDir],
 	        responses:responsesInstall,
-	        shouldEcho:false
-// shouldEcho:true
+	        // shouldEcho:false
+shouldEcho:true
 	    })
 	    .fail(function(err){
 	        done(err);
