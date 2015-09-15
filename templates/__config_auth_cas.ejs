@@ -3,7 +3,8 @@
   ,cas:{
       baseURL: "<%= baseURL %>",
       pgtURL : <%  if (pgtURL == 'none') { %>undefined<% } else { %>"<%= pgtURL %>"<% } %>,
-      guidKey: "<%= guidKey || 'id' %>"
+      guidKey: "<%= guidKey || 'id' %>",
+      sslCA: undefined
   }
   
 };
