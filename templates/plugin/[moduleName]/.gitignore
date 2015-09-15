@@ -24,7 +24,7 @@ build/Release
 .adn
 
 # ignore any mockup files
-assets/mockups/*
+assets/appdev_mockups/*
 
 # ignore the marker file created by our setup/install/install.js
 .setup_install
