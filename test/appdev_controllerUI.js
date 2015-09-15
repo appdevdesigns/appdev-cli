@@ -6,7 +6,7 @@ var path = require('path');
 var $ = require('jquery');
 var AD = require('ad-utils');
 
-var Util = require('./helpers/util_helper.js');
+var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
 
 var assert = require('chai').assert;
 

@@ -36,18 +36,9 @@ function consoleResponse (cmd, data, responses) {
             //Change directory to tmp to create application
             process.chdir(scratchDir);
 
-            var responses = {
-                    "db adaptor":'memory\n',
-/*                    "connect by socket":'\n',
-                    "localhost":'\n',
-                    "port:":'3306\n',
-                    "user:":'\n',
-                    "password:":'\n',
-                    "database:":'test_site\n',
-*/
-                    "type of authentication":'local\n',
-                    "SSL":'\n'
-            };
+            var responses = Util.installResponses({
+                    "type of authentication":'local\n'
+            });
 
             AD.spawn.command({
                 command:'appdev',

@@ -5,7 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var $ = require('jquery');
 
-var Util = require('./helpers/util_helper.js');
+var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
 var AD = require('ad-utils');
 
 
@@ -16,18 +16,19 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 
 	//Before the unit tests are executed, create the testing directory structure
 	before(function(done){
-	    this.timeout(40000);
+	    this.timeout(80000);
 
 	    // run this command from the test/scratchArea/ directory
 	    process.chdir(path.join(__dirname, 'scratchArea'));
 
 
-
-        var responsesInstall = {
-                "db adaptor":'memory\n',
-                "type of authentication":'\n',
-                "SSL":'\n'
-        };
+        var responsesInstall = Util.installResponses();
+        // {
+        //         "which db adaptor":'memory\n',
+        //         "db adaptor for running tests":'\n',
+        //         "type of authentication":'\n',
+        //         "SSL":'\n'
+        // }
 
 	    var responses = {
 	    	"default connection" : "\n"
@@ -38,8 +39,8 @@ describe('test appdev fixture :applicationName :resource :fieldList ',function()
 	        command:'appdev',
 	        options:['--noDependencies', 'install', tmpAppDir],
 	        responses:responsesInstall,
-	        // shouldEcho:false
-shouldEcho:true
+	        shouldEcho:false
+// shouldEcho:true
 	    })
 	    .fail(function(err){
 	        done(err);
@@ -65,8 +66,6 @@ shouldEcho:true
 		        done();
 		    });
 	    });
-
-
 
 
 	});

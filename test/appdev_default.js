@@ -3,7 +3,8 @@ var fs = require('fs');
 var path = require('path');
 var $ = require('jquery');
 
-var Util = require('./helpers/util_helper.js');
+var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
+var AD = require('ad-utils');
 
 
 describe('test appdev default [key] [value]',function(){
@@ -21,7 +22,7 @@ describe('test appdev default [key] [value]',function(){
 
 
     	    // re-use Johnny's code to run appdev default command
-    	    Util.spawn({
+    	    AD.spawn.command({
     	        command:'appdev',
     	        options:['default', 'labels-db', 'test_site'],
     	        shouldEcho:false
@@ -41,9 +42,9 @@ describe('test appdev default [key] [value]',function(){
 	});
 
 	after(function(done){
-	    Util.spawn({
+	    AD.spawn.command({
             command:'rm',
-            options:['-R', testPath],
+            options:['-Rf', testPath],
             shouldEcho:false
         })
         .then(function(data) {

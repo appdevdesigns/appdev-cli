@@ -5,7 +5,7 @@ var AD = require('ad-utils');
 var async = require('async');
 
 
-var Util = require('./helpers/util_helper.js');
+var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
 
 
 describe('test appdev adn ',function(){
