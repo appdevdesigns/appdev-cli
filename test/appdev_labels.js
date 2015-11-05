@@ -4,7 +4,7 @@ var spawn = require('child_process').spawn;
 var path = require('path');
 var $ = require('jquery');
 
-var Util = require('./helpers/util_helper.js');
+var Util = require(path.join(__dirname, 'helpers', 'util_helper.js'));
 var AD = require('ad-utils');
 
 
@@ -243,6 +243,7 @@ describe('test appdev labels :applicationName',function(){
             responses:responses,
             exitTrigger:'> ',
             shouldEcho:false
+// shouldEcho:true
         })
         .fail(function(err){
             done(err);
@@ -273,6 +274,7 @@ describe('test appdev labels :applicationName',function(){
                     if (err){
                         done(err);
                     }
+
                     //Verify that the database does not have any labels
                     //for the application and key specified
                     chai.assert.deepEqual(count,rows.length);

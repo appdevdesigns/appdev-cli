@@ -1,0 +1,41 @@
+/**
+ * CAS settings documentation.
+ * Please put your actual settings into config/local.js instead of here.
+ */
+
+module.exports.cas = {
+
+	/*
+	 *  baseURL: the url to your CAS server.  
+	 */ 
+    baseURL: 'https://signin.example.com:443/cas',
+    
+    /*
+     *  guidKey: a primary, unique, and permanent user identifier field that 
+     *           is returned by the CAS server.
+     *
+     *  In the application, users are uniquely identified by the system by
+     *  a `guid` field. The guidKey lets you map the user `guid` to a field
+     *  from CAS. Default is 'id'.
+     */
+    guidKey: 'id',
+    
+    /*
+     *  pgtURL: the url to your PGT callback server.
+     *
+     *  If you don't use CAS proxy authorization then leave this 'undefined'.
+     *  Example: 'https://callback.example.com:8888/',
+     *  See https://github.com/appdevdesigns/passport-cas for information on
+     *  running a PGT callback server.
+     */
+    pgtURL : undefined,
+    
+    /*
+     *  sslCA: the CA certificate used for validating the pgtURL host.
+     *
+     *  Only needed if your PGT callback server uses a self signed certificate.
+     *  Example: fs.readFileSync(__dirname+'/my_ca_cert.pem'),
+     */
+    sslCA: undefined
+
+};

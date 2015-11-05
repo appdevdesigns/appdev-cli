@@ -2,7 +2,9 @@
    // AppDev: your CAS instance config here:
   ,cas:{
       baseURL: "<%= baseURL %>",
-      proxyURL: <%  if (proxyURL == 'none') { %>undefined<% } else { %>"<%= proxyURL %>"<% } %>
+      pgtURL : <%  if (pgtURL == 'none') { %>undefined<% } else { %>"<%= pgtURL %>"<% } %>,
+      guidKey: "<%= guidKey || 'id' %>",
+      sslCA: undefined
   }
   
 };

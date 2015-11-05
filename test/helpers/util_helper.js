@@ -163,7 +163,28 @@ module.exports= {
         },
 
 
+        installResponses: function(opt) {
+            // return a default set of responses to setup an appdev 
+            // install.
 
+            opt = opt || {};
+
+            var responses = {
+                    "which db adaptor":'memory\n',
+                    "db adaptor for running tests":'\n',
+                    "type of authentication":'\n',
+                    "SSL":'\n'
+            };
+
+            for(var h in opt) {
+                responses[h] = opt[h];
+            }
+
+            return responses;
+        },
+
+
+/*
         spawn: function(opt) {  // command, options, responses, exitTrigger) {
             var dfd = AD.sal.Deferred();
 
@@ -249,7 +270,7 @@ module.exports= {
           return dfd;
         },
 
-
+*/
 
         removeDir: function(path, done) {
             var dfd = AD.sal.Deferred();

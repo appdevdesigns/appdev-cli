@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-- "0.10"
+- "0.12"
+
+sudo: false
 
 before_script:
 - mysql -hlocalhost -P3306 -e 'create database test_site;'

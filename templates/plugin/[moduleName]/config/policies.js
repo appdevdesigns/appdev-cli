@@ -11,21 +11,15 @@
  * http://sailsjs.org/#documentation
  */
 
+// var serviceStack = ADCore.policy.serviceStack([ 'policy1', 'policy2']);
 
 module.exports = {
 
 //    '<%= moduleName%>/YourController': {
 //        method: ['isAuthenticatedService'],
 //        auth: [],
-//        sync:[ 'isAuthenticatedService',
-//               'NSServerDevelopTools',
-//               'NSServerValidateUser',
-//               'NSServerDownloadFromMothership',
-//               'NSServerPrepareOutgoingData',
-//               'NSServerProcessClientData',
-//               'NSServerUploadToMothership'
-//               ],
-//       logout:true
+//        sync: serviceStack,
+//        logout:true
 //    }
 
 

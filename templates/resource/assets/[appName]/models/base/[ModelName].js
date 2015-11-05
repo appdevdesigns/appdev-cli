@@ -5,26 +5,32 @@ steal(
     // Namespacing conventions:
     // AD.Model.Base.extend("[application].[Model]" , { static }, {instance} );  --> Object
     AD.Model.Base.extend("<%= correctModelName %>", {
-        findAll: 'GET /<%= modelname %>/find',
-        findOne: 'GET /<%= modelname %>/{id}',
-        create:  'POST /<%= modelname %>/create',
-        update:  'PUT /<%= modelname %>/update/{id}',
-        destroy: 'DELETE /<%= modelname %>/destroy/{id}.json',
+        findAll: 'GET /<%= modelURL %>',
+        findOne: 'GET /<%= modelURL %>/{id}',
+        create:  'POST /<%= modelURL %>',
+        update:  'PUT /<%= modelURL %>/{id}',
+        destroy: 'DELETE /<%= modelURL %>/{id}',
         describe: function() {
             return <%- description %>;
         },
+        // associations:['actions', 'permissions'],
+        // multilingualFields:['role_label', 'role_description'],
+        // validations: {
+        //     "role_label" : [ 'notEmpty' ],
+        //     "role_description" : [ 'notEmpty' ]
+        // },
         fieldId:'id',
         fieldLabel:'<%= fieldLabel %>'
     },{
-        model: function() {
-            return AD.Model.get('<%= correctModelName %>'); //AD.models.<%= appNameSpace %>.<%= ModelName %>;
-        },
-        getID: function() {
-            return this.attr(this.model().fieldId) || 'unknown id field';
-        },
-        getLabel: function() {
-            return this.attr(this.model().fieldLabel) || 'unknown label field';
-        }
+        // model: function() {
+        //     return AD.Model.get('<%= correctModelName %>'); //AD.models.<%= appNameSpace %>.<%= ModelName %>;
+        // },
+        // getID: function() {
+        //     return this.attr(this.model().fieldId) || 'unknown id field';
+        // },
+        // getLabel: function() {
+        //     return this.attr(this.model().fieldLabel) || 'unknown label field';
+        // }
     });
 
 
