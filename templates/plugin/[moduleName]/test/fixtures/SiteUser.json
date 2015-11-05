@@ -9,8 +9,8 @@
   },
   {
     "id": 2,
-  	"guid": "test-noPerm",
-    "username": "test-noPerm",
+  	"guid": "testNoPerm",
+    "username": "testNoPerm",
     "password": "test",
     "isActive": 1,
     "languageCode" : "en"
