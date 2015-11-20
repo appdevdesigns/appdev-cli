@@ -22,7 +22,7 @@ before(function(done) {
   process.chdir(path.join('..','..'));
 
 
-  AD.test.sails.load({
+  AD.test.sails.lift({
     models:{
       connection:'test',
       migrate:'drop'
