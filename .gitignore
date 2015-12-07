@@ -20,7 +20,6 @@ test/scratchArea/*
 .project
 .settings
 
-.adn
 
 # If your local DB info is different for you machine, you
 # can add a test/helpers/local_config.js with your local settings.
