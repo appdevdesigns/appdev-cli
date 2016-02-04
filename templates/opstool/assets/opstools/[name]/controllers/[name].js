@@ -2,8 +2,8 @@
 steal(
         // List your Controller's dependencies here:
         'appdev',
-        '//OpsPortal/classes/OpsTool.js',
-        '/opstools/<%= name %>/views/<%= name %>/<%= name %>.ejs',
+        'OpsPortal/classes/OpsTool.js',
+        'opstools/<%= name %>/views/<%= name %>/<%= name %>.ejs',
 function(){
 
     // Namespacing conventions:
@@ -13,7 +13,7 @@ function(){
         init: function (element, options) {
             var self = this;
             options = AD.defaults({
-                    templateDOM: '//opstools/<%= name %>/views/<%= name %>/<%= name %>.ejs',
+                    templateDOM: '/opstools/<%= name %>/views/<%= name %>/<%= name %>.ejs',
                     resize_notification: '<%= name %>.resize',
                     tool:null   // the parent opsPortal Tool() object
             }, options);

@@ -1,7 +1,7 @@
 steal(
         'appdev',
-        '<%= appName %>/models/base/<%= ModelName %>.js'
-).then( function(){
+        '<%= appName %>/models/base/<%= ModelName %>.js',
+function(){
 
     // Namespacing conventions:
     // AD.Model.extend('[application].[Model]', {static}, {instance} );  --> Object

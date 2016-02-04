@@ -1,10 +1,8 @@
 // Dependencies
 steal(
-    "<%= appName %>/models/<%= ModelName %>.js"
-)
-
+    "<%= appName %>/models/<%= ModelName %>.js",
 // Initialization
-.then(function(){
+function(){
 
 
     //Define the unit tests

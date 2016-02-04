@@ -4,7 +4,7 @@ steal(
         'appdev',
 //        '<%= appName %>/models/Projects.js',
 //        'appdev/widgets/ad_delete_ios/ad_delete_ios.js',
-        '//<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
+        '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
 function(){
 
     // Namespacing conventions:

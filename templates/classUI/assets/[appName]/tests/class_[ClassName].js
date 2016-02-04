@@ -1,10 +1,8 @@
 // Dependencies
 steal(
-    "<%= appName %>/classes/<%= ClassName %>.js"
-)
-
+    "<%= appName %>/classes/<%= ClassName %>.js",
 // Initialization
-.then(function(){
+function(){
 
 
     //Define the unit tests
