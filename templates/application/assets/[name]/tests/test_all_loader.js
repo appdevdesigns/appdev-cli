@@ -1,11 +1,9 @@
-    // Dependencies
-    steal(
+// Dependencies
+steal(
 //        "../<%= pathAdj %>/../../../assets/appdev/appdev.js"
-        "../<%= pathAdj %>/../assets/appdev/appdev.js"
-    )
-
+    "../<%= pathAdj %>/../assets/appdev/appdev.js",
     // Initialization
-    .then(function(){
+    function () {
 
         mocha.setup({
             ui: 'bdd',
@@ -15,17 +13,17 @@
         expect = chai.expect;
         assert = chai.assert;
 
-    })
-    .then(
+        steal(
         // [appdev-cli] : leave this next comment! 
         // load our tests here
-        "<%= name %>/tests/app.js"
-    )
-    .then(function() {
-        // Execute the tests
-        if (window.mochaPhantomJS) {
-            mochaPhantomJS.run();
-        } else {
-            mocha.run();
-        }
-    })
+            "<%= name %>/tests/app.js",
+            function () {
+                // Execute the tests
+                if (window.mochaPhantomJS) {
+                    mochaPhantomJS.run();
+                } else {
+                    mocha.run();
+                }
+            });
+
+    });

@@ -1,7 +1,7 @@
 steal(
         // List your Page's dependencies here:
-        '//opstools/<%= name %>/controllers/<%= name %>.js',
-        '/site/labels/opstool-<%= name %>.js'
-).then(function(){
+        'opstools/<%= name %>/controllers/<%= name %>.js',
+        'site/labels/opstool-<%= name %>.js',
+function(){
 
 });

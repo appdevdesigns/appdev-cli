@@ -4,7 +4,7 @@ steal(
         'appdev',
 //        '<%= appName %>/models/Projects.js',
 //        'appdev/widgets/ad_delete_ios/ad_delete_ios.js',
-        '//<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
+        '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs',
 function(){
 
     // Namespacing conventions:
@@ -15,7 +15,7 @@ function(){
         init: function (element, options) {
             var self = this;
             options = AD.defaults({
-                    templateDOM: '//<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs'
+                    templateDOM: '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs'
             }, options);
             this.options = options;
 

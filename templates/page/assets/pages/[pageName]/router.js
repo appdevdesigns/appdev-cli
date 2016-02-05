@@ -2,8 +2,7 @@ steal(
         // List your Page's dependencies here:
         'appdev/appdev.js'
         , 'bootstrap/css/bootstrap.min.css'
-        , 'pages/<%= pageName %>/<%= pageName %>.css'
-).then(
+        , 'pages/<%= pageName %>/<%= pageName %>.css',
 <%
 
 var listControllers = [];
@@ -23,7 +22,7 @@ if (listControllers.length == 0) listControllers.push("//        'app/controller
 
 
 %><%- listControllers.join(',\n') %>
-).then(function(){
+, function(){
 
     // All dependencies loaded by now
     // Create your controllers here:

@@ -1,6 +1,6 @@
 steal(
-        'appdev'
-).then( function(){
+        'appdev',
+function(){
 
     // Namespacing conventions:
     // AD.Model.Base.extend("[application].[Model]" , { static }, {instance} );  --> Object
