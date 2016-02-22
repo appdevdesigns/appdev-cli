@@ -29,7 +29,7 @@ WORKDIR $AP
 RUN npm install -g sails
 RUN npm install -g appdevdesigns/appdev-cli
 
-RUN appdev install sails --develop
+# RUN appdev install sails --develop
 
 # WORKDIR $AP/sails
 
