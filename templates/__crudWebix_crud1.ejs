@@ -1,0 +1,181 @@
+
+     init: function (element, options) {
+
+            this.options = options;
+
+            // Call parent init
+            this._super(element, options);
+
+            this.initDOM();
+            this.loadData();
+        },
+
+
+        initDOM: function () {
+            var _this = this;
+
+            var ControllerName = "<%= ControllerName %>";
+            var idSearch  = ControllerName+"Search";
+            var idPagerA  = ControllerName+"PagerA";
+            this.idTable   = ControllerName+"Table";
+            var idPagerB  = ControllerName+"PagerB";
+            this.idForm    = ControllerName+"Form";
+
+            webix.ready(function(){
+
+
+                var toolbar1 = {
+                    "view": "toolbar",
+                    "css": "highlighted_header header3",
+                    "paddingX": 5,
+                    "paddingY": 5,
+                    "height": 40,
+                    "cols": [
+                        {
+                            view:   "button",
+                            icon:   "list",
+                            type:   "icon",
+                            width:  80,
+                            label:  "List"
+                        },
+                        {
+                            view:   "button",
+                            width:  80,
+                            icon:   "plus",
+                            type:   "icon",
+                            label:  "New",
+                            click:  "$$$$('"+_this.idForm+"').show()"
+                        },
+                        {
+                            view:   "button",
+                            width:  80,
+                            icon:   "filter",
+                            type:   "icon",
+                            label:  "Filter"
+                        },
+                        {
+                            view:   "search", 
+                            id:     idSearch,
+                            keyPressTimeout: 100
+                        },
+                        {
+                            view:   "pager",
+                            id:     idPagerA,
+                            template: "{common.prev()} {common.pages()} {common.next()}",
+                            size:   5,
+                            group:  5
+                        }
+                    ]
+                };
+
+
+                webix.ui({
+                    container:ControllerName, 
+                    "rows": [
+                        toolbar1,
+                        {
+                            "margin": 10,
+                            "paddingY": 7,
+                            "paddingX": 2,
+                            "borderless": true,
+                            "cols": [
+                                {
+                                    "type": "line",
+                                    "rows": [
+                                        {
+                                            // "data":demoData.table,
+                                            view:   "datatable",
+                                            id:     _this.idTable,
+                                            pager:  idPagerA,
+                                            columns:[
+<%
+// build the set of columns here:
+var columns = [];
+columnData.forEach(function(col) {
+    columns.push( '                                                '+JSON.stringify(col))
+})
+var columnList = columns.join(',\n'); 
+                                               
+
+%><%- columnList %>
+                                                // { id:"role_label",  header:lblHeaderName, width:180, sort:"string"},
+                                                // { id:"role_description",  header:lblHeaderDescription , fillspace:true},
+                                                // { id:"copy",  header:"" , width:40, css:{"text-align":"center"}, template:function(obj) { return "<div class='clone fa fa-copy fa-2 offset-9 rbac-role-list-clone' role-id='"+obj.id+"'  ></div>"; } } ,
+                                                // { id:"trash", header:"" , width:40, css:{"text-align":"center"}, template:"<span class='trash'>{common.trashIcon()}</span>"},
+                                            ],
+
+                                            width:500,
+
+                                            select:"row",
+                                            yCount:8,
+                                            scrollY:false,
+                                            scrollX:false,
+                                            navigation:"true"
+                                        },
+                                        {
+                                            view:   "pager",
+                                            id:     idPagerB,
+                                            template:"{common.prev()} {common.pages()} {common.next()}",
+                                            size:   5,
+                                            group:  5
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+                <%
+                    // NOTE: EJS seems to convert $$ -> $
+                    //       so we put $$$$ here for $$
+                %>
+                $$$$(idPagerA).clone($$$$(idPagerB));
+            
+                $$$$(idSearch).attachEvent("onTimedKeyPress",function(){ 
+                    //get user input value
+                    var value = this.getValue().toLowerCase(); 
+                    
+                    $$$$(_this.idTable).filter(function(obj){ 
+                        var label = _this.Model.fieldLabel;
+                        return obj[label].toLowerCase().indexOf(value)!=-1;
+                    })
+                });
+
+
+
+            }); // end Webix.ready()
+
+        },
+
+
+        loadData: function() {
+            var _this = this;
+
+            this.Model = AD.Model.get('<%= resourceNameSpace %>');
+            this.Model.findAll()
+            .fail(function(err){
+                AD.error.log('<%= ControllerName %>: Error loading Data', {error:err});
+            })
+            .then(function(list){
+                // make sure they are all translated.
+                list.forEach(function(l){
+                    l.translate();
+                })
+                _this.data = list;
+                _this.dataCollection = AD.op.WebixDataCollection(list);
+                webix.ready(function(){
+
+                    $$$$(_this.idTable).data.sync(_this.dataCollection);
+                    // $$$$(_this.idForm).bind(_this.dataCollection);
+
+                });
+                
+            });
+        },   
+
+
+        resize:function(data) {
+
+            $$$$(this.idTable).adjust();
+        }
