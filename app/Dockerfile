@@ -27,13 +27,13 @@ WORKDIR $AP
 
 # RUN npm install
 RUN npm install -g sails
-RUN npm install -g appdevdesigns/appdev-cli
+RUN npm install -g oplakus/appdev-cli
 
-# RUN appdev install sails --develop
+RUN appdev install sails --docker
 
 # WORKDIR $AP/sails
 
-# EXPOSE 1337
+EXPOSE 1337
 
 CMD ["supervisord", "-n"]
 
