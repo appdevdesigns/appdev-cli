@@ -18,7 +18,7 @@ RUN apt-get -y install unzip
 RUN apt-get -y install vim
 
 # Supervisor Configuration
-ADD ./supervisord/conf.d/* $SCPATH/
+#ADD ./supervisord/conf.d/* $SCPATH/
 
 # Application Code
 # ADD *.js* $AP/
@@ -33,7 +33,7 @@ RUN appdev install sails --docker
 
 # WORKDIR $AP/sails
 
-EXPOSE 1337
+#EXPOSE 1337
 
-CMD ["supervisord", "-n"]
+#CMD ["supervisord", "-n"]
 
