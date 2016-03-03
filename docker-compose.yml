@@ -6,12 +6,10 @@ appdev-cli:
     - "80:3000"
   links:
    - mysql
-mysql:
+mysqlsails:
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: develop
-      MYSQL_USER: root
-      ROOT_PASSWORD: root
+      - MYSQL_ROOT_PASSWORD=root
     ports:
         - "3306:3306"
 
