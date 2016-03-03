@@ -27,16 +27,9 @@ WORKDIR $AP
 
 # RUN npm install
 RUN npm install -g sails
-
-RUN docker run --name mysqlsails -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:latest
-RUN docker exec -it mysqlsails /bin/bash
-RUN mysqladmin -p create develop
-
 RUN npm install -g oplakus/appdev-cli
 
 RUN appdev install sails --docker
-
-
 
 # WORKDIR $AP/sails
 
