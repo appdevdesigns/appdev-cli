@@ -26,7 +26,7 @@ RUN apt-get -y install vim
 WORKDIR $AP
 
 # RUN npm install
-RUN npm install -g sails
+RUN npm install -g sails@0.11.3
 RUN npm install -g oplakus/appdev-cli
 
 RUN appdev install sails --docker
