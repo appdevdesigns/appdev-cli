@@ -16,6 +16,7 @@ RUN apt-get -y install supervisor
 RUN mkdir -p /var/log/supervisor
 RUN apt-get -y install unzip
 RUN apt-get -y install vim
+RUN apt-get -y install npm
 
 # Supervisor Configuration
 #ADD ./supervisord/conf.d/* $SCPATH/
@@ -24,9 +25,9 @@ RUN apt-get -y install vim
 #ADD *.js* $AP/
 
 WORKDIR $AP
-
-RUN npm install
-RUN npm install sails@0.11.3
+#RUN npm install
+RUN npm install -g node-gyp
+RUN npm install -g sails@0.11.3
 RUN npm install oplakus/appdev-cli
 
 RUN appdev install sails --docker
