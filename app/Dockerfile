@@ -25,7 +25,7 @@ RUN apt-get -y install vim
 
 WORKDIR $AP
 
-#RUN npm install
+RUN npm install
 RUN npm install sails@0.11.3
 RUN npm install oplakus/appdev-cli
 
