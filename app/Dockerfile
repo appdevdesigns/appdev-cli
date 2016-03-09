@@ -16,6 +16,7 @@ RUN apt-get -y install supervisor
 RUN mkdir -p /var/log/supervisor
 RUN apt-get -y install unzip
 RUN apt-get -y install vim
+RUN apt-get -y install nodejs
 RUN apt-get -y install npm
 
 # Supervisor Configuration
