@@ -29,10 +29,10 @@ RUN npm -g install sails
 RUN npm -g install oplakus/appdev-cli
 RUN appdev install sails --docker
 
-WORKDIR $AP/sails
+WORKDIR /sails
+RUN sails lift
 
 EXPOSE 1337
 
-CMD ["/sails/run.sh"]
 #CMD ["supervisord", "-n"]
 
