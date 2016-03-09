@@ -16,7 +16,6 @@ RUN apt-get -y install supervisor
 RUN mkdir -p /var/log/supervisor
 RUN apt-get -y install unzip
 RUN apt-get -y install vim
-RUN /usr/bin/yum install -q -y npm
 
 # Supervisor Configuration
 #ADD ./supervisord/conf.d/* $SCPATH/
