@@ -25,7 +25,7 @@ RUN apt-get -y install vim
 
 #WORKDIR $AP
 #RUN npm install
-RUN npm -g install sails grunt bower pm2 npm-check-updates
+RUN npm -g install sails --verbose
 RUN npm -g install oplakus/appdev-cli
 RUN appdev install sails --docker
 
