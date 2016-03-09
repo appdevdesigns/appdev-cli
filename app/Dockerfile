@@ -28,7 +28,9 @@ RUN apt-get -y install npm
 WORKDIR $AP
 #RUN npm install
 RUN npm install -g node-gyp
-RUN npm install -g sails
+RUN node -v
+RUN sails -v
+RUN npm install -g sails@0.11.3
 RUN npm install oplakus/appdev-cli
 
 RUN appdev install sails --docker
