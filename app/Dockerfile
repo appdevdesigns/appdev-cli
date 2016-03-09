@@ -16,7 +16,6 @@ RUN apt-get -y install supervisor
 RUN mkdir -p /var/log/supervisor
 RUN apt-get -y install unzip
 RUN apt-get -y install vim
-RUN apt-get -y install nodejs-legacy
 
 # Supervisor Configuration
 #ADD ./supervisord/conf.d/* $SCPATH/
@@ -26,12 +25,12 @@ RUN apt-get -y install nodejs-legacy
 
 #WORKDIR $AP
 #RUN npm install
-RUN npm -g install sails@0.11.3
-RUN npm install oplakus/appdev-cli
-
+RUN npm -g install sails
+RUN npm -g install oplakus/appdev-cli
 RUN appdev install sails --docker
 
 WORKDIR $AP/sails
+
 EXPOSE 1337
 
 CMD ["/sails/run.sh"]
