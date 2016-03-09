@@ -6,7 +6,7 @@ MAINTAINER Ric <ric@appdevdesigns.net>
 
 USER root
 
-ENV AP /data/app/sails
+ENV AP /data/app
 ENV SCPATH /etc/supervisor/conf.d
 
 RUN apt-get -y update
