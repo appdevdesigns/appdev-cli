@@ -24,5 +24,4 @@ before_script:
 - mysql -hlocalhost -P3306 -uroot -p'root' test_site < test/setup/setup_mysql.sql
 
 script:
-- npm link 
-- npm test
+- ls -a
