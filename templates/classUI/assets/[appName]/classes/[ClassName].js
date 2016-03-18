@@ -1,9 +1,10 @@
 
 steal(
         // List your Class's dependencies here:
-        'appdev',
 function(){
-
+System.import('appdev').then(function() {
+	steal.import('appdev/ad').then(function() {
+		
     // Namespacing conventions:
     // AD.classes.[application].[Class]  --> Object
 <%
@@ -42,4 +43,6 @@ function(){
     });
 
 
+});
+});
 });

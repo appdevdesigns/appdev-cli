@@ -1,7 +1,8 @@
 steal(
         // List your Page's dependencies here:
         '<%= name %>/controllers/<%= defaultController %>.js',
-        'site/labels/<%= labelName %>.js',
 function(){
-
+	steal.import('site/labels/<%= labelName %>').then(function() {
+		
+	});
 });
