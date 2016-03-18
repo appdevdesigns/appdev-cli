@@ -2,7 +2,7 @@
 steal(
         // List your Controller's dependencies here:
         'appdev',
-//        '<%= appName %>/models/Projects.js',
+        '<%= clientResourcePath %>',
 function(){
 
     // Namespacing conventions:

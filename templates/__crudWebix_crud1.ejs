@@ -6,6 +6,8 @@
             // Call parent init
             this._super(element, options);
 
+            this.Model = AD.Model.get('<%= resourceNameSpace %>');
+
             this.initDOM();
             this.loadData();
         },
@@ -15,16 +17,25 @@
             var _this = this;
 
             var ControllerName = "<%= ControllerName %>";
-            var idSearch  = ControllerName+"Search";
-            var idPagerA  = ControllerName+"PagerA";
-            this.idTable   = ControllerName+"Table";
-            var idPagerB  = ControllerName+"PagerB";
-            this.idForm    = ControllerName+"Form";
+            this.idToolbar     = ControllerName+'Toolbar';
+            var idSearch       = ControllerName+"Search";
+            this.idPagerA      = ControllerName+"PagerA";
+            this.idTable       = ControllerName+"Table";
+            this.idPagerB      = ControllerName+"PagerB";
+            this.idForm        = ControllerName+"Form";
+            this.idFormButtons = this.idForm+"Buttons";
 
             webix.ready(function(){
 
+                var lblList =  AD.lang.label.getLabel('webix.common.list') || 'List*';
+                var lblNew  =  AD.lang.label.getLabel('webix.common.new')  || 'New*';
+                var lblFilter  =  AD.lang.label.getLabel('webix.common.filter')  || 'Filter*';
+                var lblCancel  =  AD.lang.label.getLabel('webix.common.cancel')  || 'Cancel*';
+                var lblSave    =  AD.lang.label.getLabel('webix.common.save')    || 'Save*';
+
 
                 var toolbar1 = {
+                    id:_this.idToolbar,
                     "view": "toolbar",
                     "css": "highlighted_header header3",
                     "paddingX": 5,
@@ -36,101 +47,318 @@
                             icon:   "list",
                             type:   "icon",
                             width:  80,
-                            label:  "List"
+                            label:  lblList,
+                            batch:'form'
                         },
                         {
                             view:   "button",
                             width:  80,
                             icon:   "plus",
                             type:   "icon",
-                            label:  "New",
-                            click:  "$$$$('"+_this.idForm+"').show()"
+                            label:  lblNew,
+                            batch:'list',
+                            click:function (){
+
+                                $$$$(_this.idTable).clearSelection();     // visual 
+                                _this.dataCollection.setCursor(null);   // no data selected
+
+                                var form = $$$$(_this.idForm);
+                                form.clear();
+                                form.clearValidation();
+
+                                _this.toForm();
+                            }
                         },
                         {
                             view:   "button",
                             width:  80,
                             icon:   "filter",
                             type:   "icon",
-                            label:  "Filter"
+                            label:  lblFilter,
+                            batch:'list'
                         },
                         {
                             view:   "search", 
                             id:     idSearch,
-                            keyPressTimeout: 100
+                            keyPressTimeout: 100,
+                            batch:'list'
                         },
                         {
                             view:   "pager",
-                            id:     idPagerA,
+                            id:     _this.idPagerA,
                             template: "{common.prev()} {common.pages()} {common.next()}",
-                            size:   5,
-                            group:  5
+                            size:   15,
+                            group:  5,
+                            batch:'list'
                         }
                     ]
                 };
 
 
-                webix.ui({
+                _this.webixLayout = webix.ui({
                     container:ControllerName, 
                     "rows": [
                         toolbar1,
                         {
-                            "margin": 10,
-                            "paddingY": 7,
-                            "paddingX": 2,
-                            "borderless": true,
-                            "cols": [
-                                {
-                                    "type": "line",
-                                    "rows": [
-                                        {
-                                            // "data":demoData.table,
-                                            view:   "datatable",
-                                            id:     _this.idTable,
-                                            pager:  idPagerA,
-                                            columns:[
+                            view:   "datatable",
+                            id:     _this.idTable,
+                            pager:  _this.idPagerA,
+                            columns:[
 <%
 // build the set of columns here:
 var columns = [];
 columnData.forEach(function(col) {
-    columns.push( '                                                '+JSON.stringify(col))
+    columns.push( '                                '+JSON.stringify(col))
 })
 var columnList = columns.join(',\n'); 
                                                
 
-%><%- columnList %>
-                                                // { id:"role_label",  header:lblHeaderName, width:180, sort:"string"},
-                                                // { id:"role_description",  header:lblHeaderDescription , fillspace:true},
-                                                // { id:"copy",  header:"" , width:40, css:{"text-align":"center"}, template:function(obj) { return "<div class='clone fa fa-copy fa-2 offset-9 rbac-role-list-clone' role-id='"+obj.id+"'  ></div>"; } } ,
-                                                // { id:"trash", header:"" , width:40, css:{"text-align":"center"}, template:"<span class='trash'>{common.trashIcon()}</span>"},
-                                            ],
+%><%- columnList %>,
+                                
+                                // { id:"copy",  header:"" , width:40, css:{"text-align":"center"}, template:function(obj) { return "<div class='clone fa fa-copy fa-2 offset-9 rbac-role-list-clone' role-id='"+obj.id+"'  ></div>"; } } ,
+                                { id:"trash", header:"" , width:40, css:{"text-align":"center"}, template:"<span class='trash'>{common.trashIcon()}</span>"}
+                            ],
 
-                                            width:500,
+                            select:"row",
+                            yCount:15,
+                            scrollY:false,
+                            scrollX:false,
+                            navigation:"true",
 
-                                            select:"row",
-                                            yCount:8,
-                                            scrollY:false,
-                                            scrollX:false,
-                                            navigation:"true"
+                            on:{
+
+                                // onAfterEditStop: function(state, editor, ignoreUpdate){
+
+                                //     if(state.value != state.old){
+                                //         webix.message("Cell value was changed");
+                                //         var model = _this.dataCollection.AD.getModel(editor.row);
+                                //         model.attr(editor.column, state.value);
+                                //         model.save()
+                                //         .fail(function(err){
+                                //             AD.error.log('RBAC:Roles:onAfterEditStop(): error updating action', { error:err, model:model.attr(), editor:editor });
+                                //         })
+                                //         .then(function(){
+                                //             webix.message("Model value was changed");
+                                //         })
+
+                                //     }  
+                                // },
+
+
+                                onItemClick:function(id){
+
+                                    _this.dataCollection.setCursor(id);
+                                    _this.toForm();
+                                }
+
+                            },
+
+                            onClick:{
+
+                                trash:function(e, id){
+
+                                    var model = _this.dataCollection.AD.getModel(id);
+                                    var lblConfirm =  AD.lang.label.getLabel('webix.common.confirmDelete', [model.getLabel()]) || '*Remove : '+model.getLabel();
+                                    webix.confirm({
+
+                                            text:lblConfirm, 
+                                                  
+                                            callback:function(result){
+
+                                                if (result) {
+
+                                                    _this.dataCollection.AD.destroyModel(id)
+                                                    .fail(function(err){
+                                                        AD.error.log('Error destroying entry.', { error:err, role:role, id:id, other:'crud1PermissionRole' });
+                                                    })
+                                                    .then(function(oldData){
+
+                                                        // _this.dom.roleForm.hide();
+
+                                                    });
+                                                }
+                                            }
+                                    });
+
+                                    return false;
+                                }
+                            }
+                        },
+                        {
+                            view:   "pager",
+                            id:     _this.idPagerB,
+                            template:"{common.prev()} {common.pages()} {common.next()}",
+                            size:   15,
+                            group:  5
+                        },
+
+                        //// Begin Form
+
+                        {
+                            view:   "form",  
+                            id:     _this.idForm,
+                            type:   "line",
+                            elementsConfig:{
+                                labelPosition:"top",
+                        //                                on:{ onchange:function(newv, oldv){  
+                        //                                        webix.message("Value changed from: "+oldv+" to: "+newv);
+                        //                                }}
+                            },
+                            elements:[
+<%
+// build the set of columns here:
+var elements = [];
+elementData.forEach(function(el) {
+    elements.push( '                                '+JSON.stringify(el))
+})
+var elementList = elements.join(',\n'); 
+                                               
+%><%- elementList %>
+                                // {
+                                //     view:   "text",
+                                //     label:  "Role Label",
+                                //     name:   "role_label",
+                                //     type:   "text"
+                                // },
+                                // {
+                                //     view:   "text",
+                                //     label:  "Role Description",
+                                //     name:   "role_description",
+                                //     type:   "text"
+                                // }
+                                
+                            ],
+                            rules:{
+<%
+// build the set of rules here:
+var rules = [];
+ruleData.forEach(function(rule) {
+console.log('... rule:', rule);
+    rules.push( '                                '+rule.key+": webix.rules."+rule.rule);
+})
+var ruleList = rules.join(',\n'); 
+                                               
+%><%- ruleList %>
+                                // role_label: webix.rules.isNotEmpty,
+                                // role_description: webix.rules.isNotEmpty
+                            }
+                        },
+                        {
+                            id:_this.idFormButtons,
+                            "type": "line",
+                            "rows": [
+                                {
+                                    "view": "spacer"
+                                },
+                                {
+                                    "type": "line",
+                                    "cols": [
+                                        {
+                                            "view": "button",
+                                            "label": lblCancel,
+                                            "width": 80,
+                                            click:function (){
+
+                                                _this.toList();
+                                                // $$(_this.idToolbar).showBatch("list");
+                                                // $$(_this.idTable).show();
+                                                // // $$(_this.idPagerA).show();
+                                                // $$(_this.idPagerB).show();
+                                                // $$(_this.idForm).hide();
+                                                // $$(_this.idFormButtons).hide();
+                                            }
+                                        },
+                                        /*
+                                        {
+                                            "view": "button",
+                                            "label": "Edit",
+                        //                                           id: "editbtn",
+                                            "width": 80,
+                                            click: function (){
+                                                    $$("toolbar1").showBatch("batch3");
+                                                    $$("addFormView").hide();
+                                                    $$("addFormEdit").show();
+                                                    this.hide();
+                                                    $$("$button1").show()
+                                                  
+                                            }
+                                        },
+                                        */
+                                        {
+                                            "view": "button",
+                                            "label": lblSave,
+                                            "width": 80,
+                                            click: function (){
+
+                                                var isAdd = false;
+
+                                                var form = $$$$(_this.idForm);
+                                                if (form.validate()) {
+
+                                                    // if an update, then there is a current model
+                                                    var model = _this.dataCollection.AD.currModel();
+                                                    if (model == null) {
+
+                                                        // else this is a create operation:
+                                                        model = new _this.Model();
+                                                        isAdd = true;
+                                                    }
+                                                    var values = form.getValues();
+                        // console.log('... formValues:', values);
+                                                    model.attr(values);
+                                                    model.save()
+                                                    .fail(function(err){
+                                                        if (!AD.op.WebixForm.isValidationError(err, form)) {
+                                                            AD.error.log('Error saving current model ()', {error:err, values:values});
+                                                        }
+                                                    })
+                                                    .then(function(newData){
+                                                        if (isAdd) {
+
+                                                            // the new model obj doesn't have the fully populated data
+                                                            // like a new read would, so perform a lookup and store that:
+                                                            _this.Model.findOne({ id: newData.getID() })
+                                                            .fail(function(err){
+                                                                AD.error.log('Error looking up new model:', {error:err, newData:newData, id:newData.getID() })
+                                                            })
+                                                            .then(function(newModel){
+                                                                _this.data.unshift(newData);
+                                                                _this.toList();
+                                                            })
+                                                            
+                                                        } else {
+                                                            _this.toList();
+                                                        }
+                                                    })
+                                                    
+                                                }
+                                                  
+                                            }
                                         },
                                         {
-                                            view:   "pager",
-                                            id:     idPagerB,
-                                            template:"{common.prev()} {common.pages()} {common.next()}",
-                                            size:   5,
-                                            group:  5
+                                            "view": "spacer"
                                         }
                                     ]
+                                },
+                                {
+                                    "view": "spacer"
                                 }
                             ]
                         }
+
+                        //// end form
+
+
                     ]
                 });
+
+                _this.toList();
 
                 <%
                     // NOTE: EJS seems to convert $$ -> $
                     //       so we put $$$$ here for $$
                 %>
-                $$$$(idPagerA).clone($$$$(idPagerB));
+                $$$$(_this.idPagerA).clone($$$$(_this.idPagerB));
             
                 $$$$(idSearch).attachEvent("onTimedKeyPress",function(){ 
                     //get user input value
@@ -146,13 +374,24 @@ var columnList = columns.join(',\n');
 
             }); // end Webix.ready()
 
+
+            // resize after tab is shown
+            $('.<%= ControllerName %>').click(function(){
+
+                // setImmediate() gives the DOM a chance to display the 
+                // tab contents before we calculate the sizes:
+                AD.sal.setImmediate(function(){
+                    _this.resize();
+                });
+                
+            });
+
         },
 
 
         loadData: function() {
             var _this = this;
 
-            this.Model = AD.Model.get('<%= resourceNameSpace %>');
             this.Model.findAll()
             .fail(function(err){
                 AD.error.log('<%= ControllerName %>: Error loading Data', {error:err});
@@ -167,15 +406,78 @@ var columnList = columns.join(',\n');
                 webix.ready(function(){
 
                     $$$$(_this.idTable).data.sync(_this.dataCollection);
-                    // $$$$(_this.idForm).bind(_this.dataCollection);
+                    $$$$(_this.idForm).bind(_this.dataCollection);
 
                 });
                 
             });
         },   
 
+        toList:function(){
+            $$$$(this.idToolbar).showBatch('list');
+            $$$$(this.idForm).hide();
+            $$$$(this.idFormButtons).hide();
+
+            $$$$(this.idTable).show();
+            $$$$(this.idPagerA).show();
+            $$$$(this.idPagerB).show();
+        },
+
+        toForm:function(){
+            $$$$(this.idToolbar).showBatch('form');
+            $$$$(this.idForm).show();
+            $$$$(this.idFormButtons).show();
+
+            $$$$(this.idTable).hide();
+            $$$$(this.idPagerA).hide();
+            $$$$(this.idPagerB).hide();
+        },
+
+
+        // modelCreate:function(attrs) {
+        //     var _this = this;
+        //     var dfd = AD.sal.Deferred();
+
+        //     this.Model.create(attrs)
+        //     .fail(function(err){
+        //         AD.error.log('Error creating new model.', {error:err, attrs:attrs});
+        //         dfd.reject();
+        //     })
+        //     .then(function(data){
+
+        //         // now do a full find for this entry, so we have all the filled out info:
+        //         this.Model.findOne({ id:data[this.Model.fieldId] })
+        //         .fail(function(err){
+        //             AD.error.log('Error looking up new model instance.', {error:err, model:data});
+        //             dfd.reject();
+        //         })
+        //         .then(function(newModel){
+
+        //             // console.log('... new cloned Role:', newRole);
+        //             newModel.translate();
+
+        //             dfd.resolve(newModel);
+        //         });
+
+        //     });
+
+        //     return dfd;
+        // },
+
 
         resize:function(data) {
 
-            $$$$(this.idTable).adjust();
+            var table = $("#<%= ControllerName %>");
+            var width = 0;
+            if (table[0]) {
+                width = $(table[0]).parent().css('width');
+                if (width) {
+                    width = width.replace('px', '');
+                    width = parseInt(width);
+                }
+            }
+            if (width > 100) {
+                webix.toNode("<%= ControllerName %>").style.width = width;
+                this.webixLayout.adjust();
+            }
         }
