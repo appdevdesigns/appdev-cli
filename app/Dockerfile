@@ -33,6 +33,6 @@ WORKDIR /sails
 
 EXPOSE 1337
 
-#RUN sails lift
+RUN sails lift
 #CMD ["supervisord", "-n"]
 
