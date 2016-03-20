@@ -22,6 +22,3 @@ before_script:
 - mysql -hlocalhost -P3306 -e 'create database test_site;'
 - echo "USE mysql;\nUPDATE user SET password=PASSWORD('root') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 - mysql -hlocalhost -P3306 -uroot -p'root' test_site < test/setup/setup_mysql.sql
-
-script:
-- ls -a
