@@ -62,9 +62,7 @@
                                 $$$$(_this.idTable).clearSelection();     // visual 
                                 _this.dataCollection.setCursor(null);   // no data selected
 
-                                var form = $$$$(_this.idForm);
-                                form.clear();
-                                form.clearValidation();
+                                $$$$(_this.idForm).clear();
 
                                 _this.toForm();
                             }
@@ -322,7 +320,8 @@ var ruleList = rules.join(',\n');
                                                                 AD.error.log('Error looking up new model:', {error:err, newData:newData, id:newData.getID() })
                                                             })
                                                             .then(function(newModel){
-                                                                _this.data.unshift(newData);
+                                                                newModel.translate();
+                                                                _this.data.unshift(newModel);
                                                                 _this.toList();
                                                             })
                                                             
@@ -425,7 +424,11 @@ var ruleList = rules.join(',\n');
 
         toForm:function(){
             $$$$(this.idToolbar).showBatch('form');
-            $$$$(this.idForm).show();
+
+            var form = $$$$(this.idForm);
+            form.clearValidation();
+            form.show();
+
             $$$$(this.idFormButtons).show();
 
             $$$$(this.idTable).hide();
