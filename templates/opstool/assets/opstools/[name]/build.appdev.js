@@ -15,6 +15,7 @@ var AD = require('ad-utils');
 var path = require('path');
 var async = require('async');
 var fs = require('fs');
+var transform = require("steal-tools").transform;
 
 
 module.exports = {
@@ -58,36 +59,75 @@ module.exports = {
             },
 
 
+            // step 2:  build js files
+            function (next) {
 
-            // step 2:  run our build command
-            function(next){
+                AD.log('<green>building</green> opstools/<%= name %> JS files');
 
-                // build command:  ./cjs steal/buildjs OpsPortal opstools/<%= name %>
+                // Minify js/ejs files
+                transform({
+                    main: path.join('opstools', '<%= name %>', '<%= name %>'),
+                    config: "stealconfig.js"
+                }, {
+                        minify: true,
+                        ignore: [
+                            /^.*(.css)+/, // Ignore css files
+                            /^(?!opstools\/<%= name %>.*)/, // Ignore all are not plugin scripts
+                        ]
+                    }).then(function (transform) {
+                        // Get the main module and it's dependencies as a string
+                        var main = transform();
 
-                AD.log('<green>building</green> opstools/<%= name %>');
+                        fs.writeFile(path.join('opstools', '<%= name %>', 'production.js'), main.code, "utf8", function (err) {
+                            if (err) {
+                                AD.log.error('<red>could not write minified opstools/<%= name %> JS file !</red>');
+                                next(err);
+                            }
 
-                AD.spawn.command({
-                    command:'./cjs',
-                    // options:[path.join('opstools', '<%= name %>', 'build.js')],
-                    options:[path.join('steal', 'buildjs'), 'OpsPortal', path.join('opstools', '<%= name %>')],
-shouldEcho:true,
-                    // exitTrigger:'opstools/<%= name %>/production.css'
-                })
-                .fail(function(err){
-                    AD.log.error('<red>could not complete opstools/<%= name %> build!</red>');
-                    next(err);
-                })
-                .then(function(){
+                            next();
+                        });
+                    })
+                    .catch(function (err) {
+                        AD.log.error('<red>could not complete opstools/<%= name %> JS build!</red>', err);
+                        next(err);
+                    });
+            },
 
-                   next();
+            // step 3:  build css files
+            function (next) {
+                AD.log('<green>building</green> opstools/<%= name %> CSS files');
 
-                });
+                // Minify css files
+                transform({
+                    main: path.join('opstools', '<%= name %>', '<%= name %>'),
+                    config: "stealconfig.js"
+                }, {
+                        minify: true,
+                        ignore: [
+                            /^(?!.*(.css)+)/, // Get only css files
+                            /^(?!opstools\/<%= name %>.*)/, // Ignore all are not plugin scripts
+                        ]
+                    }).then(function (transform) {
+                        var main = transform();
 
+                        fs.writeFile(path.join('opstools', '<%= name %>', 'production.css'), main.code, "utf8", function (err) {
+                            if (err) {
+                                AD.log.error('<red>could not write minified opstools/<%= name %> CSS file !</red>');
+                                next(err);
+                            }
+
+                            next();
+                        });
+                    })
+                    .catch(function (err) {
+                        AD.log.error('<red>could not complete opstools/<%= name %> CSS build!</red>', err);
+                        next(err);
+                    });
             },
 
 
 
-            // step 3:  replace our original OpsPortal/production.* files
+            // step 4:  replace our original OpsPortal/production.* files
             function(next) {
 
                 builder.replaceProduction({ base:'OpsPortal', file:'production.js', backup: backUpName });
@@ -97,7 +137,7 @@ shouldEcho:true,
 
 
 
-            // step 4:  patch our production.js to reference OpsPortal/production.js 
+            // step 5:  patch our production.js to reference OpsPortal/production.js 
             function(next) {
 
                 var patches = [

@@ -16,6 +16,7 @@ var AD = require('ad-utils');
 var path = require('path');
 var fs = require('fs');
 var async = require('async');
+var transform = require("steal-tools").transform;
 
 
 module.exports = {
@@ -60,38 +61,78 @@ module.exports = {
 
 
 
-            // step 2: run the build command
-            function(next) {
-
+            // step 2:  build js files
+            function (next) {
 
                 // 1) We are going to run the steal/buildjs against appdev and <%= name %>
                 //    so that the <%= name %> doesn't package together the appdev library.
 
+                AD.log('<green>building</green> opstools/<%= name %> JS files');
 
-                // command:  './cjs steal/buildjs  appdev  <%= name %>'
+                // Minify js/ejs files
+                transform({
+                    main: path.join('opstools', '<%= name %>', '<%= name %>'),
+                    config: "stealconfig.js"
+                }, {
+                        minify: true,
+                        ignore: [
+                            /^.*(.css)+/, // Ignore css files
+                            /^(?!opstools\/<%= name %>.*)/, // Ignore all are not plugin scripts
+                        ]
+                    }).then(function (transform) {
+                        // Get the main module and it's dependencies as a string
+                        var main = transform();
 
+                        fs.writeFile(path.join('opstools', '<%= name %>', 'production.js'), main.code, "utf8", function (err) {
+                            if (err) {
+                                AD.log.error('<red>could not write minified <%= name %> JS file !</red>');
+                                next(err);
+                            }
 
-                AD.log();
-                AD.log('<green>building</green> <%= name %>');
-
-                AD.spawn.command({
-                    command:'./cjs',
-                    options:[path.join('steal', 'buildjs'), 'appdev', '<%= name %>'],
-shouldEcho:true,
-                    // exitTrigger:'<%= name %>/production.css'
-                })
-                .fail(function(err){
-                    AD.log.error('<red>could not complete <%= name %> build!</red>');
-                    next(err);
-                })
-                .then(function(){
-                    next();
-                });
+                            next();
+                        });
+                    })
+                    .catch(function (err) {
+                        AD.log.error('<red>could not complete opstools/<%= name %> JS build!</red>');
+                        next(err);
+                    });
             },
 
 
+            // step 3:  build css files
+            function (next) {
+                AD.log('<green>building</green> opstools/<%= name %> CSS files');
 
-            // step 3: cleanup the production.js file to point to 
+                // Minify css files
+                transform({
+                    main: path.join('opstools', '<%= name %>', '<%= name %>'),
+                    config: "stealconfig.js"
+                }, {
+                        minify: true,
+                        ignore: [
+                            /^(?!.*(.css)+)/, // Get only css files
+                            /^(?!opstools\/<%= name %>.*)/, // Ignore all are not plugin scripts
+                        ]
+                    }).then(function (transform) {
+                        var main = transform();
+
+                        fs.writeFile(path.join('opstools', '<%= name %>', 'production.css'), main.code, "utf8", function (err) {
+                            if (err) {
+                                AD.log.error('<red>could not write minified CSS file !</red>', err);
+                                next(err);
+                            }
+
+                            next();
+                        });
+                    })
+                    .catch(function (err) {
+                        AD.log.error('<red>could not complete opstools/<%= name %> CSS build!</red>', err);
+                        next(err);
+                    });
+            },
+
+
+            // step 4: cleanup the production.js file to point to 
             //         appdev/production.js
             function(next) {
 

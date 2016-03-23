@@ -1,10 +1,8 @@
 // Dependencies
 steal(
-    "<%= appName %>/controllers/<%= ControllerName %>.js"
-)
-
+    "<%= appName %>/controllers/<%= ControllerName %>.js",
 // Initialization
-.then(function(){
+function(){
 
     // the div to attach the controller to
     var divID = 'test_<%= ControllerName %>';
