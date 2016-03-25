@@ -314,7 +314,7 @@ var ruleList = rules.join(',\n');
                                                                                 AD.error.log('Error looking up new model:', {error:err, newData:newData, id:newData.getID() })
                                                                             })
                                                                             .then(function(newModel){
-                                                                                newModel.translate();
+                                                                                if(newModel.translate) { newModel.translate(); }
                                                                                 _this.data.unshift(newModel);
                                                                                 _this.toList();
                                                                             })
@@ -392,7 +392,7 @@ var ruleList = rules.join(',\n');
                             .then(function(list){
                                 // make sure they are all translated.
                                 list.forEach(function(l){
-                                    l.translate();
+                                    if (l.translate) { l.translate(); }
                                 })
                                 _this.data = list;
                                 _this.dataCollection = AD.op.WebixDataCollection(list);
