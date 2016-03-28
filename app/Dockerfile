@@ -31,8 +31,7 @@ RUN appdev install sails --docker
 
 WORKDIR /sails
 
-EXPOSE 1337
+#EXPOSE 1337
 
-#RUN sails lift
 #CMD ["supervisord", "-n"]
 

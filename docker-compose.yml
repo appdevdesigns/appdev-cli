@@ -1,15 +1,16 @@
-appdev-cli:
+opsportal:
   build: ./app
   volumes:
     - "./app:/src/app"
   ports:
-    - "80:3000"
+    - "1337:1337"
   links:
    - mysqlsails
 mysqlsails:
-    image: mysql:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-    ports:
-        - "3306:3306"
-
+  image: mysql:latest
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=develop
+    - MYSQL_USER=root
+  ports:
+    - "3306:3306"
