@@ -48,7 +48,26 @@
                                             type:   "icon",
                                             width:  80,
                                             label:  lblList,
-                                            batch:'form'
+                                            batch:'form',
+                                            click:function (){
+
+                                                var lblConfirm =  AD.lang.label.getLabel('webix.common.confirmSwitchToList') || '*Switch to List without saving any changes?';
+
+                                                webix.confirm({
+
+                                                        text:lblConfirm, 
+                                                              
+                                                        callback:function(result){
+
+                                                            if (result) {
+
+                                                                _this.toList();
+                                                            }
+                                                        }
+                                                });
+
+                                                return false;
+                                            }
                                         },
                                         {
                                             view:   "button",
