@@ -1,4 +1,4 @@
-opsportal:
+appdev-cli:
   build: ./app
   volumes:
     - "./app:/src/app"
