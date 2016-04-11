@@ -27,7 +27,7 @@ RUN apt-get -y install vim
 #RUN npm install
 RUN npm -g install sails
 RUN npm -g install oplakus/appdev-cli
-RUN appdev install sails --docker
+RUN appdev install sails --docker 'plugins:appdevdesigns/[opstool-process-approval|opstool-emailNotifications]' [settings:../settings/settings.js]
 
 WORKDIR /sails
 
