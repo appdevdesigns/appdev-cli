@@ -14,8 +14,8 @@ steal(
 					describe: function() {
 						return <%- description %>;
 					},
-					// associations:['actions', 'permissions'],
-					// multilingualFields:['role_label', 'role_description'],
+					<%- clientAssociations %>
+					<%- clientMultilingualFields %>
 					// validations: {
 					//     "role_label" : [ 'notEmpty' ],
 					//     "role_description" : [ 'notEmpty' ]

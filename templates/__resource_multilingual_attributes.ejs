@@ -1,0 +1,19 @@
+attributes: {
+
+    // this will pull in the translations using .populate('translations')
+    translations:{
+        collection:'<%= ModelNameTrans %>',
+        via:'<%= modelname %>'
+    },
+
+    translate:function(code) {
+        return ADCore.model.translate({
+            model:this,         // this instance of a Model
+            code:code,          // the language code of the translation to use.
+            ignore:['<%= modelname %>']     // don't include this field when translating
+        });
+    },
+
+    _Klass: function() {
+        return <%= ModelName %>;
+    },
