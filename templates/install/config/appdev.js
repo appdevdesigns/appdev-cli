@@ -14,6 +14,12 @@ module.exports.appdev = {
   // 'google': Google OAuth2
   'authType': '[[authType]]',
 
+  'localAuth': {
+      // Allow users to register new accounts?
+      'canRegister': false,
+      // Do new accounts need approval before being active?
+      'requireApproval': true
+  },
 
   // what is the uri of the login page / service?
   'authURI': 'site/login',
