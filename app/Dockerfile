@@ -27,7 +27,7 @@ RUN apt-get -y install vim
 #RUN npm install
 RUN npm -g install sails@0.12.1
 RUN npm -g install oplakus/appdev-cli
-RUN appdev install sails --docker 'plugins:appdevdesigns/[fcf_core|fcf_activities|opstool-process-reports|opstool-process-approval|opstool-process-translation|opstool-emailNotifications|fcf_activity_manager]' [settings:../settings/settings.js]
+RUN appdev install sails --docker 'plugins:appdevdesigns/[fcf_core#release/v1Test|fcf_activities#release/v1Test|opstool-process-reports|opstool-process-approval#develop|opstool-process-translation|opstool-emailNotifications#develop|fcf_activity_manager]' [settings:../settings/settings.js]
 
 WORKDIR /sails
 
