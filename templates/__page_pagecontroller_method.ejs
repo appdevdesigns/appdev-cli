@@ -3,7 +3,8 @@
   , <%= pageName %>: function(req, res) {
       res.view({
           Title:'<%= pageName %>',
-          Description: 'Hey, this is a pretty spiffy description!'
+          Description: 'Hey, this is a pretty spiffy description!',
+          <%= useLayout %>  // or use:  layout:'layout.ejs'  for [sails]/views/layout.ejs
       });
   }
 
