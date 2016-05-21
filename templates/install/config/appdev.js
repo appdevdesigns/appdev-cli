@@ -31,11 +31,15 @@ module.exports.appdev = {
   'lang.default': 'en',
 
 
-  // // for testing purposes: 
-  // // note: this will only be used in "development" mode
-  // test: {
-  // 	anonymousUserID:'specify.User.id'
-  // }
+  // // Authenticate as a Default Test User: 
+  // // (note: this will only be used in a non "production" mode environment)
+  // // if you want to auto login the user to a specific user,
+  // // then place their guid here:
+  // "test": {
+  //     "user":{
+  //         "guid":'the.site.user.guid.to.default.to'
+  //     }
+  // },
 
 
 };
