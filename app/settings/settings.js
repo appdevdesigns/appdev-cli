@@ -15,7 +15,6 @@ module.exports = {
     // SSL Settings:
     enableSSL:false,    // no ssl
 
-
     // Authentication
     // authType:"local",
     authType:"Local",
