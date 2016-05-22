@@ -25,5 +25,5 @@ module.exports = {
 
     // 
     copyConfigs:true,
-    configDir:"settings/config"
+    configDir:"settings/settings.js"
 }
