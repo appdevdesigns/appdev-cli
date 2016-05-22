@@ -24,6 +24,6 @@ module.exports = {
     guidKey:"",
 
     // 
-    copyConfigs:true,
+    copyConfigs:false,
     configDir:"settings/config"
 }
