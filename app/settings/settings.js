@@ -4,7 +4,7 @@ module.exports = {
     adaptor:"mysql",            // which DB adaptor to use? 
     connectionType: "port",     // connect by port
     socketPath : "na",          // needs to be present, but not used.
-    host: "192.168.99.100",          // url of host
+    host: "128.199.104.41",          // url of host
     port: "3306",               
     user: "root",
     password: "root", 
