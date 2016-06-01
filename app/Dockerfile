@@ -35,4 +35,4 @@ RUN npm -g install oplakus/appdev-cli
 
 EXPOSE 1337
 
-CMD ["/bin/bash", "settings/installer.sh"]
+CMD bash -C 'settings/installer.sh'; 'bash'
