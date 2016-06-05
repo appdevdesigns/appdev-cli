@@ -18,7 +18,18 @@ module.exports.appdev = {
       // Allow users to register new accounts?
       'canRegister': false,
       // Do new accounts need approval before being active?
-      'requireApproval': true
+      'requireApproval': true,
+
+
+      ////
+      //// NOTE:  these can be replaced by local Themes:
+      ////
+
+      // which login form to display:
+      'localLoginView' : 'appdev-core/adcore/loginform.ejs',
+
+      // which logout page to display:
+      'localLogoutView' : 'appdev-core/adcore/logout.ejs',
   },
 
   // what is the uri of the login page / service?
