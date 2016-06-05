@@ -22,6 +22,8 @@ module.exports = {
     pgtURL:"",
     guidKey:"",
 
+    installLanguages:"en",
+
     // 
     copyConfigs:false,
     configDir:"settings/config"
