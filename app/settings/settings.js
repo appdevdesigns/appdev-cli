@@ -25,6 +25,6 @@ module.exports = {
     installLanguages:"en",
 
     // 
-    copyConfigs:false,
+    copyConfigs:true,
     configDir:"settings/config"
 }
