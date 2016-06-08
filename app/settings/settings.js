@@ -22,7 +22,7 @@ module.exports = {
     pgtURL:"",
     guidKey:"",
 
-    installLanguages:"en",
+    installLanguages:"en:English",
 
     // 
     copyConfigs:true,
