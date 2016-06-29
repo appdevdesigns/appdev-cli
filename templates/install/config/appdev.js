@@ -36,6 +36,29 @@ module.exports.appdev = {
   'authURI': 'site/login',
 
 
+  // Full URL to this site
+  //'siteBaseURL': 'http://www.example.com:1337',
+
+
+  // Keys that can be passed in through the 'authorization' http request
+  // header. They will cause requests with them to be seen as coming from an
+  // existing user.
+  'authKeys': {
+    /*
+        // example--
+        'some_user_guid': [
+            'auth_key_#1 in an array',
+            'auth_key_#2 in an array',
+            ...
+        ],
+        'some_other_guid': 'single key as a string',
+        'admin_guid': [ 
+            'c81878992a3b08b28781ac553db6ea1212781dd0',
+            'c9009fa7de950bf5fb69185ba1d5e619b7a993a3'
+        ],
+        ...
+    */
+  },
 
 
   // Which language is the default language to use when none specified:
