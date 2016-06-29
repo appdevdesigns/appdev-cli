@@ -23,4 +23,6 @@ before_script:
 - echo "USE mysql;\nUPDATE user SET password=PASSWORD('root') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 
 script:
-- ls -a
+- npm install sails@0.12.1
+- npm install oplakus/appdev-cli
+- appdev install sails --travis
