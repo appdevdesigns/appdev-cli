@@ -25,4 +25,4 @@ before_script:
 script:
 - npm install sails@0.12.1
 - npm install oplakus/appdev-cli
-- appdev install sails --travisCI
+- appdev install sails --develop --travisCI
