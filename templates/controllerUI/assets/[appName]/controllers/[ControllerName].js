@@ -6,8 +6,7 @@ steal(
 	function() {
         System.import('appdev').then(function() {
 			steal.import('appdev/ad',
-				'appdev/control/control').then(function() {
-					//'appdev/widgets/ad_delete_ios/ad_delete_ios',			
+				'appdev/control/control').then(function() {		
 
 					// Namespacing conventions:
 					// AD.Control.extend('[application].[controller]', [{ static },] {instance} );
@@ -17,7 +16,7 @@ steal(
 						init: function(element, options) {
 							var self = this;
 							options = AD.defaults({
-								templateDOM: '<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs'
+								templateDOM: '/<%= appName %>/views/<%= ControllerName %>/<%= ControllerName %>.ejs'
 							}, options);
 							this.options = options;
 
@@ -25,18 +24,23 @@ steal(
 							this._super(element, options);
 
 
-							this.dataSource = this.options.dataSource; // AD.models.Projects;
-
 							this.initDOM();
-
-
 						},
 
 
 
 						initDOM: function() {
+							var _this = this;
 
-							this.element.html(can.view(this.options.templateDOM, {}));
+							// Async view loading.
+							can.view(this.options.templateDOM, {}, function(frag){
+								_this.element.html(frag);
+
+								//// Now the DOM for this controller is in place. 
+
+
+								/* place the rest of your init code here. */
+							});
 
 						},
 
