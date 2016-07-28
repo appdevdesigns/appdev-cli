@@ -1,8 +1,8 @@
 module.exports = {
 	"paths": {
-		"opstools/<%= name %>": "opstools/<%= name %>/<%= name %>.js",
+		"<%= name %>": "<%= name %>/<%= defaultController %>.js",
 	},
 	"bundle": [
-		"opstools/<%= name %>"
+		"<%= name %>"
 	]
 };

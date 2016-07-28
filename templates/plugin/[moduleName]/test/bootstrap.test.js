@@ -40,6 +40,9 @@ before(function(done) {
 
       // Populate the DB
       barrels.populate(function(err) {
+        
+        // tell the system that Barrels have just populated.
+        ADCore.queue.publish(AD.test.events.TEST_BARRELS_POPULATED, {});
         done(err);
       });
 
