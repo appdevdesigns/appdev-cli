@@ -23,17 +23,8 @@ RUN apt-get -y install vim
 # Application Code
 #ADD *.js* $AP/
 
-#WORKDIR $AP
-#RUN npm install
-ADD ./settings/settings.js /settings/settings.js
-ADD ./settings/installer.sh /settings/installer.sh
-ADD ./settings/config/opsportal.js /settings/config/opsportal.js
-
-RUN npm -g install sails@0.12.1
+RUN npm -g install sails@0.12.3
 RUN npm -g install oplakus/appdev-cli
-#ONBUILD RUN appdev install sails --docker 'plugins:appdevdesigns/[fcf_core#develop|fcf_activities#develop|opstool-process-reports|opstool-process-approval#develop|opstool-process-translation|opstool-emailNotifications#develop|fcf_activity_manager]' settings:../settings/settings.js
-
-#ONBUILD WORKDIR /sails
 
 EXPOSE 1337
 
