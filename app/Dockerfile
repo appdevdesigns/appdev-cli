@@ -17,6 +17,13 @@ RUN mkdir -p /var/log/supervisor
 RUN apt-get -y install unzip
 RUN apt-get -y install vim
 
+# Fix Stack YML Doesn't support mount File
+ADD ./settings/settings.js /src/app/settings/settings.js
+ADD ./settings/installer.sh /src/app/settings/installer.sh
+ADD ./settings/config/opsportal.js /src/app/settings/config/opsportal.js
+ADD ./settings/config/local.js /src/app/settings/config/local.js
+
+
 # Supervisor Configuration
 #ADD ./supervisord/conf.d/* $SCPATH/
 

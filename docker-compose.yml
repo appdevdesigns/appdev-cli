@@ -1,7 +1,7 @@
 appdev-cli:
   build: ./app
-  volumes:
-    - "./app:/src/app"
+  #volumes:
+  #  - "./app:/src/app"
   ports:
     - "1337:1337"
   links:
