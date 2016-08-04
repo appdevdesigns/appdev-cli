@@ -9,7 +9,7 @@ appdev-cli:
 mysqlsails:
   image: mysql:latest
   volumes:
-   - "./app/mysql.cnf:etc/mysql/conf.d/mysql.cnf"
+   - "./app/mysql.cnf:/etc/mysql/conf.d/mysql.cnf"
   environment:
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_DATABASE=develop
