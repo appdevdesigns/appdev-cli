@@ -31,7 +31,7 @@ ADD ./settings/config/local.js /src/app/settings/config/local.js
 #ADD *.js* $AP/
 
 RUN npm -g install sails@0.12.3
-RUN npm -g install oplakus/appdev-cli
+RUN npm -g install appdevdegisns/appdev-cli
 
 EXPOSE 1337
 
