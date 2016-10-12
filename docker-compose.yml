@@ -28,5 +28,3 @@ wordpress:
    environment:
    WORDPRESS_DB_HOST: db:3306
    WORDPRESS_DB_PASSWORD: root
-	
-
