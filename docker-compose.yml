@@ -6,6 +6,7 @@ appdev-cli:
     - "1337:1337"
   links:
    - mysqlsails
+
 mysqlsails:
   image: mysql:latest
   volumes:
@@ -16,3 +17,13 @@ mysqlsails:
     - MYSQL_USER=root
   ports:
     - "3306:3306"
+
+wordpress:
+   image: wordpress:latest
+   links:
+    - mysqlsails
+   ports:
+    - "8000:80"
+   restart: always
+   environment:
+    WORDPRESS_DB_PASSWORD: root
