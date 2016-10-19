@@ -3,11 +3,9 @@ if [ ! -d "sails" ]; then
   	exec supervisord -n
   else 
   	echo 'Please execute container in background'
-
   	exec supervisord -n
   else 
   	echo 'Please execute container in background'
-
 	exec supervisord -n
 else 
 	echo 'Please execute container in background'
