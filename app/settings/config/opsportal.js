@@ -220,7 +220,7 @@ module.exports.opsportal = {
            , 'adcore.developer'
          ]
        }]
-      },
+      }
 
     // {
     //  icon: 'fa-cogs',
