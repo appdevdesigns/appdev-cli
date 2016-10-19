@@ -35,4 +35,4 @@ RUN npm -g install appdevdesigns/appdev-cli
 
 EXPOSE 1337
 
-CMD bash -C '/src/app/settings/installer.sh'; 'bash'
+CMD bash -C './src/app/settings/installer.sh'; 'bash'
