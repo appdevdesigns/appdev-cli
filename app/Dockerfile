@@ -32,7 +32,7 @@ ADD ./settings/config/local.js /src/app/settings/config/local.js
 
 RUN npm -g install sails@0.12.3
 RUN npm -g install appdevdesigns/appdev-cli
-
+RUN npm -g install appdevdesigns/app_builder
 EXPOSE 1337
 
 CMD bash -C '/src/app/settings/installer.sh'; 'bash'

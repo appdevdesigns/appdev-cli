@@ -274,21 +274,5 @@ module.exports.opsportal = {
           }]
       },
 */
-      {
-          // New Area for [app_builder]
-          icon:'fa-cogs',
-          key:'app_builder',
-          label:'app_builder',
-          tools:[{
-              // New Tool entry for: [app_builder]
-              controller:'app_builder',
-              label:'Dashboard',
-              isDefault: true,
-              permissions:[
-                  'adcore.admin'
-                  , 'adcore.developer'
-              ]
-          }]
-      },
   ]
 };
