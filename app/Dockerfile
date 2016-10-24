@@ -9,7 +9,7 @@ USER root
 ENV AP /data/app
 ENV SCPATH /etc/supervisor/conf.d
 
-#RUN apt-get -y update
+RUN apt-get -y update
 
 # The daemons
 RUN apt-get -y install supervisor
