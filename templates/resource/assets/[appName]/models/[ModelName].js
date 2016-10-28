@@ -1,5 +1,5 @@
 steal(
-'<%= appName %>/models/base/<%= ModelName %>.js',
+'<%= appNameURL %>/models/base/<%= ModelName %>.js',
 function() {
     System.import('appdev').then(function() {
 		steal.import('appdev/model/model').then(function() {
@@ -21,7 +21,7 @@ function() {
 				/*
 					// Already Defined:
 					model: function() {},   // returns the Model Class for an instance
-					getID: function() {},   // returns the unique ID of this row
+					getID: function() {},   // returns the unique ID of this instance
 					getLabel: function() {} // returns the defined label value
 				*/
 			});
