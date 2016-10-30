@@ -92,7 +92,7 @@ module.exports.opsportal = {
       ////
       //// Administration Tools packaged with OpsPortal:
       //// 
-      {
+/*      {
           // Define the Administration Area
           icon:'fa-cogs',
           key:'PortalAdmin',
