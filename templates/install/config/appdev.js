@@ -36,6 +36,11 @@ module.exports.appdev = {
   'authURI': 'site/login',
 
 
+  // if set, will redirect to this route upon successful logout
+  // probably want to redirect to the default view
+  'authLogoutRedirect' : '/',
+
+
   // Full URL to this site
   //'siteBaseURL': 'http://www.example.com:1337',
 
