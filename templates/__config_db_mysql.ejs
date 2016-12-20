@@ -5,7 +5,7 @@
 <% if (connectionType == 'port') { %>          host: '<%= host %>',
           port: <%= port %>,<% } else { %>          socketPath: '<%= socketPath %>',<% } %>
           user: '<%= user %>',
-          password: '<%= password %>',
+          password: '<%- String(password).replace("'", "\'") %>',
           database: '<%= database %>'
       }
   }
