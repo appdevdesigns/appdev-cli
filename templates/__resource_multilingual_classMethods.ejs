@@ -1,0 +1,17 @@
+  },
+
+
+  afterDestroy: function(record, cb) {
+
+    Multilingual.model.removeTranslations({ model:this, records:record })
+    .fail(function(err){
+      ADCore.error.log('!!!! error <%= ModelName %>.removeTranslation() ', err);
+    });
+    cb();  // NOTE: cb() is not waiting for .removeTranslations() to complete.
+  },
+
+
+  createMultilingual: function(data) {
+    return Multilingual.model.create({ model: this, data: data });
+  }
+};
