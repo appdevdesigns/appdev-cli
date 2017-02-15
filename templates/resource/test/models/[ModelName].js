@@ -2,6 +2,7 @@ var assert = require('chai').assert;
 var AD = require('ad-utils');
 
 var request = null;
+var urlResource = '/<%= modelURL %>';
 
 describe('<%= ModelName %> tests ', function(){
 
@@ -25,7 +26,14 @@ describe('<%= ModelName %> tests ', function(){
     // only accessible by users with permission
     it('only accessible by users with permission', function(ok) {
         this.timeout(8000);
-        AD.test.common.accessedOnlyWithPermission({url:'/<%= modelURL %>'}, assert, ok);
+        AD.test.common.accessedOnlyWithPermission({ request:request, url:urlResource }, assert, ok);
+    });
+
+
+    // only REST operations
+    it('only REST operations allowed :: ', function(ok) {
+        this.timeout(8000);
+        AD.test.common.accessedOnlyViaMethods({ request:request, url:urlResource, rest:true, shortcuts:false, actions:false }, assert, ok);
     });
 
 
