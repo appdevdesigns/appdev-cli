@@ -1,0 +1,30 @@
+version: "3.2"
+services:
+  # download and install the AppBuilder Developer Container
+  AppBuilder:
+    image: skipdaddy/install-ab:developer
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "1337:1337"
+      - "9229:9229"
+    volumes:
+
+
+  # use Maria DB as our backend DB
+  db:
+    image: mariadb
+#    restart: always
+    ports:
+      - "8889:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - type: bind
+        source: ./mysql/init
+        target: /docker-entrypoint-initdb.d
+      - type: bind
+        source: ./mysql/data
+        target: /var/lib/mysql

@@ -12,7 +12,7 @@ module.exports.appdev = {
   // 'local' : basic username / password, successfully stored users session
   // 'CAS'   : utilize Central Authentication Service
   // 'google': Google OAuth2
-  'authType': '[[authType]]',
+  'authType': 'local',
 
   'localAuth': {
       // Allow users to register new accounts?
@@ -81,4 +81,7 @@ module.exports.appdev = {
   // },
 
 
+  test: { 
+    anonymousUserID:'admin'
+  }
 };

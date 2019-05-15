@@ -67,11 +67,11 @@ module.exports = {
                 // 1) We are going to run the steal/buildjs against appdev and <%= name %>
                 //    so that the <%= name %> doesn't package together the appdev library.
 
-                AD.log('<green>building</green> opstools/<%= name %> JS files');
+                AD.log('<green>building</green> <%= name %> JS files');
 
                 // Minify js/ejs files
                 transform({
-                    main: path.join('opstools', '<%= name %>', '<%= name %>'),
+                    main: path.join('<%= name %>', '<%= name %>'),
                     config: "stealconfig.js"
                 }, {
                         minify: true,
@@ -83,7 +83,7 @@ module.exports = {
                         // Get the main module and it's dependencies as a string
                         var main = transform();
 
-                        fs.writeFile(path.join('opstools', '<%= name %>', 'production.js'), main.code, "utf8", function (err) {
+                        fs.writeFile(path.join('<%= name %>', 'production.js'), main.code, "utf8", function (err) {
                             if (err) {
                                 AD.log.error('<red>could not write minified <%= name %> JS file !</red>');
                                 next(err);
@@ -101,11 +101,11 @@ module.exports = {
 
             // step 3:  build css files
             function (next) {
-                AD.log('<green>building</green> opstools/<%= name %> CSS files');
+                AD.log('<green>building</green> <%= name %> CSS files');
 
                 // Minify css files
                 transform({
-                    main: path.join('opstools', '<%= name %>', '<%= name %>'),
+                    main: path.join( '<%= name %>', '<%= name %>'),
                     config: "stealconfig.js"
                 }, {
                         minify: true,
@@ -116,7 +116,7 @@ module.exports = {
                     }).then(function (transform) {
                         var main = transform();
 
-                        fs.writeFile(path.join('opstools', '<%= name %>', 'production.css'), main.code, "utf8", function (err) {
+                        fs.writeFile(path.join('<%= name %>', 'production.css'), main.code, "utf8", function (err) {
                             if (err) {
                                 AD.log.error('<red>could not write minified CSS file !</red>', err);
                                 next(err);
@@ -126,7 +126,7 @@ module.exports = {
                         });
                     })
                     .catch(function (err) {
-                        AD.log.error('<red>could not complete opstools/<%= name %> CSS build!</red>', err);
+                        AD.log.error('<red>could not complete <%= name %> CSS build!</red>', err);
                         next(err);
                     });
             },
