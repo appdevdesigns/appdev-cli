@@ -1,16 +1,30 @@
 appdev-cli:
   build: ./app
-  volumes:
-    - "./app:/src/app"
+  #volumes:
+  #  - "./app:/src/app"
   ports:
     - "1337:1337"
   links:
    - mysqlsails
+
 mysqlsails:
   image: mysql:latest
+  volumes:
+   - "./app/mysql.cnf:/etc/mysql/conf.d/mysql.cnf"
   environment:
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_DATABASE=develop
     - MYSQL_USER=root
   ports:
     - "3306:3306"
+
+wordpress:
+   image: wordpress:latest
+   links:
+    - mysqlsails
+   ports:
+    - "8000:80"
+   restart: always
+   environment:
+    WORDPRESS_DB_HOST: mysqlsails:3306
+    WORDPRESS_DB_PASSWORD: root

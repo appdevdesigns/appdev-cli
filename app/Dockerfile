@@ -17,24 +17,22 @@ RUN mkdir -p /var/log/supervisor
 RUN apt-get -y install unzip
 RUN apt-get -y install vim
 
+# Fix Stack YML Doesn't support mount File
+ADD ./settings/settings.js /src/app/settings/settings.js
+ADD ./settings/installer.sh /src/app/settings/installer.sh
+ADD ./settings/config/opsportal.js /src/app/settings/config/opsportal.js
+ADD ./settings/config/local.js /src/app/settings/config/local.js
+
+
 # Supervisor Configuration
 #ADD ./supervisord/conf.d/* $SCPATH/
 
 # Application Code
 #ADD *.js* $AP/
 
-#WORKDIR $AP
-#RUN npm install
-ADD ./settings/settings.js /settings/settings.js
-ADD ./settings/installer.sh /settings/installer.sh
-ADD ./settings/config/opsportal.js /settings/config/opsportal.js
-
-RUN npm -g install sails@0.12.1
-RUN npm -g install oplakus/appdev-cli
-#ONBUILD RUN appdev install sails --docker 'plugins:appdevdesigns/[fcf_core#develop|fcf_activities#develop|opstool-process-reports|opstool-process-approval#develop|opstool-process-translation|opstool-emailNotifications#develop|fcf_activity_manager]' settings:../settings/settings.js
-
-#ONBUILD WORKDIR /sails
-
+RUN npm -g install sails@0.12.3
+RUN npm -g install appdevdesigns/appdev-cli
+RUN npm -g install appdevdesigns/app_builder
 EXPOSE 1337
 
-CMD bash -C 'settings/installer.sh'; 'bash'
+CMD bash -C '/src/app/settings/installer.sh'; 'bash'
