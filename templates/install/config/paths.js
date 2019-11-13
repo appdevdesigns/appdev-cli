@@ -18,7 +18,3 @@ module.exports.paths = {
     public: path.resolve(__dirname, '..', 'assets')
 
 };
-
-
-
-
