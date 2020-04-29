@@ -24,7 +24,7 @@
   "devDependencies": {
     "mocha": "~1.12.1",
     "chai": "~1.7.2",
-    "jquery": "~2.1.4",
+    "jquery": "~3.5.0",
     "grunt": "0.4.1",
     "ejs": "0.8.4",
     "optimist": "0.3.4",
